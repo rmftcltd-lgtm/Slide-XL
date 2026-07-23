@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand — product purple/white with Aussie adventure accents */
+  --purple: #6b2d91;
+  --purple-deep: #4a1d68;
+  --purple-bright: #8b3db8;
+  --purple-soft: #f3e9f8;
+  --khaki: #b8956c;
+  --khaki-deep: #8a6a45;
+  --ocean: #1f6f6a;
+  --ocean-soft: #e6f3f2;
+  --timber: #7a4e2d;
+  --chrome: #c5ccd4;
+  --ink: #1a1225;
+  --ink-muted: #5c5368;
+  --paper: #faf7fc;
+  --white: #ffffff;
+  --success: #1f7a4c;
+  --background: var(--paper);
+  --foreground: var(--ink);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--purple);
+  color: white;
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display), system-ui, sans-serif;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-aussie-wash {
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 0%, rgba(107, 45, 145, 0.14), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 90% 10%, rgba(31, 111, 106, 0.12), transparent 50%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(184, 149, 108, 0.16), transparent 55%),
+      linear-gradient(180deg, #faf7fc 0%, #f5f0e8 100%);
+  }
+
+  .bg-hero-floor {
+    background:
+      linear-gradient(180deg, rgba(26, 18, 37, 0.35) 0%, rgba(26, 18, 37, 0.55) 100%),
+      url("/images/mop-action-wood.png") center / cover no-repeat;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wring {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.9) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1) rotate(12deg);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.7s ease-out both;
+}
+
+.animate-slide-in-delay-1 {
+  animation: slide-in 0.7s ease-out 0.12s both;
+}
+
+.animate-slide-in-delay-2 {
+  animation: slide-in 0.7s ease-out 0.24s both;
+}
+
+.animate-wring {
+  animation: wring 2.8s ease-in-out infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle 2.2s ease-in-out infinite;
+}
