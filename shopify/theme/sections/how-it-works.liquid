@@ -18,7 +18,13 @@
       </div>
     {% else %}
       <div class="media-bleed">
-        {{ 'mop-action-tile.png' | asset_url | image_tag: loading: 'lazy' }}
+        <img
+          src="{{ 'mop-action-tile.png' | asset_url }}"
+          alt="Slide XL mop clearing muddy paw prints and pet hair on tile"
+          width="1536"
+          height="1024"
+          loading="lazy"
+        >
       </div>
     {% endif %}
   </div>
@@ -34,7 +40,7 @@
       "type": "textarea",
       "id": "lede",
       "label": "Intro",
-      "default": "Same hard-won Aussie thinking that started it all — rebuilt as V4.0 with a larger head, longer pole, and a wringer that actually keeps up with shedding season."
+      "default": "Same hard-won Aussie thinking that started it all — rebuilt with a larger head, longer pole, and a wringer that actually keeps up with shedding season."
     },
     { "type": "image_picker", "id": "image", "label": "Supporting image" }
   ],

@@ -3,7 +3,14 @@
     {% if section.settings.image != blank %}
       {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', class: 'hero__img', widths: '800,1200,1600,2000', sizes: '100vw' }}
     {% else %}
-      {{ 'mop-action-wood.png' | asset_url | image_tag: loading: 'eager', class: 'hero__img' }}
+      <img
+        class="hero__img"
+        src="{{ 'mop-action-wood.png' | asset_url }}"
+        alt="Slide XL mop cleaning pet hair on timber floors"
+        width="1536"
+        height="1024"
+        loading="eager"
+      >
     {% endif %}
   </div>
   <div class="hero__overlay"></div>

@@ -4,7 +4,14 @@
       {% if section.settings.image != blank %}
         {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'rounded shadow', loading: 'lazy', widths: '600,900,1200', sizes: '(min-width: 900px) 50vw, 100vw' }}
       {% else %}
-        {{ 'bundle-flatlay.png' | asset_url | image_tag: class: 'rounded shadow', loading: 'lazy' }}
+        <img
+          class="rounded shadow"
+          src="{{ 'bundle-flatlay.png' | asset_url }}"
+          alt="Slide XL Pre-Launch Bundle: mop, bucket, and refill heads"
+          width="1536"
+          height="1024"
+          loading="lazy"
+        >
       {% endif %}
     </div>
     <div>
