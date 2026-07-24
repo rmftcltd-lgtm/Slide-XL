@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 /**
- * Create / update the Slide XL Pre-Launch Bundle on a Shopify store via Admin API.
+ * Create / update the Slide XL Pre-Launch Bundle via Admin API.
  *
- * Required env:
+ * Auth (either):
+ *   SHOPIFY_ADMIN_TOKEN=shpat_...
+ * or client credentials (Dev Dashboard apps):
+ *   SHOPIFY_CLIENT_ID=...
+ *   SHOPIFY_CLIENT_SECRET=shpss_...
  *   SHOPIFY_STORE=your-store.myshopify.com
- *   SHOPIFY_ADMIN_TOKEN=shpat_...   (Admin API access token with write_products, write_files, read_products)
  */
 import { readFileSync, existsSync } from "fs";
 import path from "path";
@@ -15,13 +18,7 @@ const ROOT = path.join(__dirname, "..");
 const THEME_ASSETS = path.join(ROOT, "theme", "assets");
 
 const STORE = (process.env.SHOPIFY_STORE || "").replace(/^https?:\/\//, "").replace(/\/$/, "");
-const TOKEN = process.env.SHOPIFY_ADMIN_TOKEN || process.env.SHOPIFY_CLI_THEME_TOKEN || "";
 const API = "2025-01";
-
-if (!STORE || !TOKEN) {
-  console.error("Missing SHOPIFY_STORE or SHOPIFY_ADMIN_TOKEN");
-  process.exit(1);
-}
 
 const HANDLE = "pre-launch-bundle";
 const PRICE = "149.95";
@@ -46,12 +43,37 @@ const IMAGE_FILES = [
   "before-after-tamanui.png",
 ];
 
-async function shopify(method, route, body) {
+async function getAdminToken() {
+  if (process.env.SHOPIFY_ADMIN_TOKEN) return process.env.SHOPIFY_ADMIN_TOKEN;
+  const id = process.env.SHOPIFY_CLIENT_ID;
+  const secret = process.env.SHOPIFY_CLIENT_SECRET;
+  if (!id || !secret || !STORE) {
+    throw new Error(
+      "Set SHOPIFY_ADMIN_TOKEN or SHOPIFY_CLIENT_ID + SHOPIFY_CLIENT_SECRET + SHOPIFY_STORE",
+    );
+  }
+  const res = await fetch(`https://${STORE}/admin/oauth/access_token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type: "client_credentials",
+      client_id: id,
+      client_secret: secret,
+    }),
+  });
+  const data = await res.json();
+  if (!res.ok || !data.access_token) {
+    throw new Error(`Token exchange failed: ${JSON.stringify(data)}`);
+  }
+  return data.access_token;
+}
+
+async function shopify(token, method, route, body) {
   const res = await fetch(`https://${STORE}/admin/api/${API}${route}`, {
     method,
     headers: {
       "Content-Type": "application/json",
-      "X-Shopify-Access-Token": TOKEN,
+      "X-Shopify-Access-Token": token,
     },
     body: body ? JSON.stringify(body) : undefined,
   });
@@ -68,10 +90,10 @@ async function shopify(method, route, body) {
   return data;
 }
 
-async function stagedUpload(filePath) {
+async function stagedUpload(token, filePath) {
   const filename = path.basename(filePath);
   const bytes = readFileSync(filePath);
-  const staging = await shopify("POST", "/graphql.json", {
+  const staging = await shopify(token, "POST", "/graphql.json", {
     query: `mutation stagedUploadsCreate($input: [StagedUploadInput!]!) {
       stagedUploadsCreate(input: $input) {
         stagedTargets { url resourceUrl parameters { name value } }
@@ -105,9 +127,11 @@ async function stagedUpload(filePath) {
 }
 
 async function main() {
+  if (!STORE) throw new Error("SHOPIFY_STORE is required");
   console.log(`Connecting to ${STORE}…`);
+  const token = await getAdminToken();
 
-  const existing = await shopify("GET", `/products.json?handle=${HANDLE}&limit=1`);
+  const existing = await shopify(token, "GET", `/products.json?handle=${HANDLE}&limit=1`);
   let product = existing.products?.[0];
 
   const payload = {
@@ -136,15 +160,14 @@ async function main() {
     payload.product.id = product.id;
     payload.product.variants[0].id = product.variants[0].id;
     console.log(`Updating product #${product.id}…`);
-    const updated = await shopify("PUT", `/products/${product.id}.json`, payload);
+    const updated = await shopify(token, "PUT", `/products/${product.id}.json`, payload);
     product = updated.product;
   } else {
     console.log("Creating Pre-Launch Bundle product…");
-    const created = await shopify("POST", "/products.json", payload);
+    const created = await shopify(token, "POST", "/products.json", payload);
     product = created.product;
   }
 
-  // Attach images if product has none (or fewer than expected)
   if ((product.images?.length || 0) < IMAGE_FILES.length) {
     console.log("Uploading product images…");
     for (const file of IMAGE_FILES) {
@@ -154,13 +177,12 @@ async function main() {
         continue;
       }
       try {
-        const resourceUrl = await stagedUpload(full);
-        await shopify("POST", `/products/${product.id}/images.json`, {
+        const resourceUrl = await stagedUpload(token, full);
+        await shopify(token, "POST", `/products/${product.id}/images.json`, {
           image: { src: resourceUrl },
         });
         console.log(`  + ${file}`);
       } catch (err) {
-        // Fallback: skip staged upload errors; theme assets still ship with the theme
         console.warn(`  ! ${file}: ${err.message}`);
       }
     }
