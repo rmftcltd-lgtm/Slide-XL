@@ -162,13 +162,13 @@ export function MeetMike() {
         <div className="relative">
           <Image
             src="/images/mike-tamanui-coast.png"
-            alt="Mike the Mop King with Tamanui on the coast, holding Slide XL"
-            width={1536}
+            alt="Mike the Mop King in Los Angeles with Slide XL"
+            width={1051}
             height={1024}
             className="h-auto w-full rounded-2xl object-cover"
           />
           <p className="mt-3 text-sm text-white/55">
-            Mike the Mop King & Tamanui — the faces of the Slide XL campaign.
+            Mike the Mop King — Los Angeles.
           </p>
         </div>
         <div>
@@ -176,7 +176,7 @@ export function MeetMike() {
             The Aussie behind the mop
           </p>
           <h2 className="mt-3 font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            Meet Mike the Mop King — and Tamanui.
+            Meet Mike the Mop King.
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-white/80">
             Michael Clegg invents like he cleans: no nonsense, plenty of heart,
@@ -251,12 +251,12 @@ export function BeforeAfter() {
               Tamanui-approved
             </p>
             <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              Muddy noses. Shed hair. Spotless after.
+              Muddy paws. Shed hair. Spotless after.
             </h2>
             <p className="mt-4 text-ink-muted leading-relaxed">
-              The campaign runs on real mess — not studio glitter. If your dog
-              treats the hallway like a racetrack, you already know why Slide XL
-              exists.
+              Tamanui puts Slide XL through real mess — muddy paws, shed hair,
+              hallway chaos. If your dog treats the floor like a racetrack, you
+              already know why this mop exists.
             </p>
           </div>
           <Image

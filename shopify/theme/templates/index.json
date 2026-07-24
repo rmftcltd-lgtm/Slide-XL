@@ -136,11 +136,22 @@
     },
     "mike": {
       "type": "mike-tamanui",
-      "settings": {}
+      "settings": {
+        "caption": "Mike the Mop King — Los Angeles.",
+        "eyebrow": "The Aussie behind the mop",
+        "heading": "Meet Mike the Mop King.",
+        "body": "Michael Clegg invents like he cleans: no nonsense, plenty of heart, and a healthy disrespect for floors that stay filthy. Think crocodile-hunter energy — except the wildlife is shedding on your timber.",
+        "body_2": "Slide XL has a larger mop head, longer reach, purple-and-white finish, and the wrinkles of earlier versions ironed out. Tamanui isn't a prop — he's the product tester who keeps Mike honest.",
+        "quote": "If it can handle Tamanui after a beach run, it can handle your living room."
+      }
     },
     "ba": {
       "type": "before-after",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Tamanui-approved",
+        "heading": "Muddy paws. Shed hair. Spotless after.",
+        "lede": "Tamanui puts Slide XL through real mess — muddy paws, shed hair, hallway chaos. If your dog treats the floor like a racetrack, you already know why this mop exists."
+      }
     },
     "faq": {
       "type": "faq",
