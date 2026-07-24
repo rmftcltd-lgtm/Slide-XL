@@ -13,7 +13,7 @@ export function SiteFooter() {
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
             Aussie-invented. USA-bound. Built for pet hair, timber, tile, and
             the kind of mess Tamanui leaves behind. Invented by Mike the Mop
-            King — Slide XL V4.0.
+            King.
           </p>
         </div>
         <div>

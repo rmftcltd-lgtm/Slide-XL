@@ -1,0 +1,42 @@
+<header class="site-header">
+  <div class="shell site-header__inner">
+    <a class="logo" href="{{ routes.root_url }}">
+      <img
+        class="logo__mark"
+        src="{{ 'slide-xl-logo.png' | asset_url }}"
+        alt="{{ shop.name | escape }}"
+        width="80"
+        height="80"
+        loading="eager"
+      >
+      <span class="logo__text">Slide <span>XL</span></span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="{{ routes.root_url }}#how-it-works">How it works</a>
+      <a href="{{ routes.root_url }}#for-who">Who it's for</a>
+      <a href="{{ routes.root_url }}#mike">Mike &amp; Tamanui</a>
+      {% assign bundle = all_products['pre-launch-bundle'] %}
+      {% if bundle != blank and bundle.url != blank %}
+        <a href="{{ bundle.url }}">Bundle</a>
+      {% else %}
+        <a href="/products/pre-launch-bundle">Bundle</a>
+      {% endif %}
+    </nav>
+    <div class="site-header__actions">
+      <span class="pill">🇺🇸 {{ settings.brand_tagline | default: 'USA launch' }}</span>
+      <a class="cart-btn" href="{{ routes.cart_url }}" aria-label="Cart">
+        <span aria-hidden="true">🛒</span>
+        {% if cart.item_count > 0 %}
+          <span class="cart-btn__count">{{ cart.item_count }}</span>
+        {% endif %}
+      </a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}

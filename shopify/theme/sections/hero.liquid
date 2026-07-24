@@ -1,0 +1,75 @@
+<section class="hero">
+  <div class="hero__media">
+    {% if section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', class: 'hero__img', widths: '800,1200,1600,2000', sizes: '100vw' }}
+    {% else %}
+      <img
+        class="hero__img"
+        src="{{ 'mop-action-wood.png' | asset_url }}"
+        alt="Slide XL mop cleaning pet hair on timber floors"
+        width="1536"
+        height="1024"
+        loading="eager"
+      >
+    {% endif %}
+  </div>
+  <div class="hero__overlay"></div>
+  <div class="shell hero__content">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1>
+      <span class="hero__brand">{{ section.settings.brand }}</span>
+      <span class="hero__headline">{{ section.settings.headline }}</span>
+    </h1>
+    <p class="hero__sub">{{ section.settings.subcopy }}</p>
+    <div class="hero__cta">
+      {% assign p = section.settings.product %}
+      {% if p == blank %}
+        {% assign p = all_products['pre-launch-bundle'] %}
+      {% endif %}
+      {% if p != blank and p.url != blank %}
+        {% assign bundle_url = p.url %}
+      {% else %}
+        {% assign bundle_url = '/products/pre-launch-bundle' %}
+      {% endif %}
+      <a class="btn btn--primary" href="{{ bundle_url }}">
+        {% if p != blank %}
+          {{ section.settings.cta_label }} — {{ p.price | money_with_currency }}
+        {% else %}
+          {{ section.settings.cta_label }}
+        {% endif %}
+      </a>
+      <a class="btn btn--ghost" href="{{ bundle_url }}">{{ section.settings.secondary_label }}</a>
+    </div>
+    {% if section.settings.fine_print != blank %}
+      <p class="hero__fine">{{ section.settings.fine_print }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "product", "id": "product", "label": "Featured product" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Mike the Mop King · USA Pre-Launch" },
+    { "type": "text", "id": "brand", "label": "Brand", "default": "Slide XL" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Pet hair? She'll be right." },
+    {
+      "type": "textarea",
+      "id": "subcopy",
+      "label": "Supporting copy",
+      "default": "Sweep, mop, and dry in one go. Hair grabs on — then falls off when the head hits water. Built bigger, longer, and purple for American floors and Aussie-sized mess."
+    },
+    { "type": "text", "id": "cta_label", "label": "Primary CTA", "default": "Grab the Bundle" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary CTA", "default": "See what's in the box" },
+    {
+      "type": "text",
+      "id": "fine_print",
+      "label": "Fine print",
+      "default": "Free shipping across the USA"
+    }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}
