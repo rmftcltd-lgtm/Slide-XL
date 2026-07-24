@@ -1,0 +1,53 @@
+<section class="band band--wash product-page">
+  <div class="shell split">
+    <div>
+      {% if product.featured_media %}
+        {{ product.featured_media | image_url: width: 1400 | image_tag: class: 'rounded shadow', loading: 'eager', widths: '700,1000,1400', sizes: '(min-width: 900px) 50vw, 100vw' }}
+      {% endif %}
+      <div class="thumbs">
+        {% for media in product.media %}
+          {% if media != product.featured_media %}
+            {{ media | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200,400', sizes: '25vw' }}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow eyebrow--purple">USA Pre-Launch · Limited offer</p>
+      <h1>{{ product.title }}</h1>
+      <p class="lede">{{ product.description | strip_html | truncate: 180 }}</p>
+      <div class="price-row">
+        <span class="price">{{ product.selected_or_first_available_variant.price | money }}</span>
+        {% if product.compare_at_price > product.price %}
+          <span class="compare">{{ product.compare_at_price | money }} RRP</span>
+          <span class="badge">Save {{ product.compare_at_price | minus: product.price | money }}</span>
+        {% endif %}
+      </div>
+      <p class="shipping-note">Including shipping right across the USA</p>
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button class="btn btn--primary" type="submit" {% unless product.available %}disabled{% endunless %}>
+          {% if product.available %}
+            {{ 'products.product.add_to_cart' | t }} — {{ product.price | money }}
+          {% else %}
+            {{ 'products.product.sold_out' | t }}
+          {% endif %}
+        </button>
+      {% endform %}
+      <div class="product-body">{{ product.description }}</div>
+      <dl class="specs">
+        <div><dt>Handle</dt><dd>Longer XL reach</dd></div>
+        <div><dt>Head</dt><dd>Larger ridged pad</dd></div>
+        <div><dt>Finish</dt><dd>Purple &amp; white</dd></div>
+        <div><dt>Shipping</dt><dd>Included (USA)</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": []
+}
+{% endschema %}

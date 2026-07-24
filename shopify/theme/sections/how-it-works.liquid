@@ -1,0 +1,85 @@
+<section class="band band--wash" id="how-it-works">
+  <div class="shell">
+    <p class="eyebrow eyebrow--purple">{{ section.settings.eyebrow }}</p>
+    <h2>{{ section.settings.heading }}</h2>
+    <p class="lede">{{ section.settings.lede }}</p>
+    <ol class="steps">
+      {% for block in section.blocks %}
+        <li {{ block.shopify_attributes }}>
+          <span class="steps__num">0{{ forloop.index }}</span>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.body }}</p>
+        </li>
+      {% endfor %}
+    </ol>
+    {% if section.settings.image != blank %}
+      <div class="media-bleed">
+        {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '800,1200,1600', sizes: '100vw' }}
+      </div>
+    {% else %}
+      <div class="media-bleed">
+        {{ 'mop-action-tile.png' | asset_url | image_tag: loading: 'lazy' }}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "How it works",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "default": "How Slide XL works", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "default": "One tool. Sweep, mop, dry — hair gone.", "label": "Heading" },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Intro",
+      "default": "Same hard-won Aussie thinking that started it all — rebuilt as V4.0 with a larger head, longer pole, and a wringer that actually keeps up with shedding season."
+    },
+    { "type": "image_picker", "id": "image", "label": "Supporting image" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Sweep" },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body",
+          "default": "The ridged XL head grabs pet hair, dander, dust, and crumbs in one pass."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How it works",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Sweep",
+            "body": "The ridged XL head grabs pet hair, dander, dust, and crumbs in one pass — no vacuum warm-up required."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Mop",
+            "body": "Wet it down and the same head washes timber, tile, and sealed floors without leaving a swamp behind."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Release",
+            "body": "Dip the head in water and the hair lets go. Slide-wringer squeezes it clean. Refill when you're ready."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

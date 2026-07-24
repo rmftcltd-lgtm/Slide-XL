@@ -1,0 +1,72 @@
+<section class="band band--wash" id="faq">
+  <div class="shell shell--narrow">
+    <h2>{{ section.settings.heading }}</h2>
+    <dl class="faq">
+      {% for block in section.blocks %}
+        <div {{ block.shopify_attributes }}>
+          <dt>{{ block.settings.question }}</dt>
+          <dd>{{ block.settings.answer }}</dd>
+        </div>
+      {% endfor %}
+    </dl>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    { "type": "text", "id": "heading", "default": "Questions, answered", "label": "Heading" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "FAQ item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "What is in the Pre-Launch Bundle?" },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "One Slide XL mop with head (RRP $89.95), four additional mop head refills (RRP $24.95 each), and one collapsible wheeled bucket (RRP $29.95). Bundle price $149.95 including shipping across the USA."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "question": "What is in the Pre-Launch Bundle?",
+            "answer": "One Slide XL mop with head (RRP $89.95), four additional mop head refills (RRP $24.95 each), and one collapsible wheeled bucket (RRP $29.95). Bundle price $149.95 including shipping across the USA."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Why is it ideal for pet owners?",
+            "answer": "The ridged head grabs loose hair as you go. When the head touches water, that hair releases — so rinsing is part of the clean, not an extra chore."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Do you ship outside the USA?",
+            "answer": "Not yet. We're launching USA-first with markets structured for Australia, Canada, the UK, and New Zealand next."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Is this related to older Aussie mops?",
+            "answer": "Slide XL is Mike's V4.0 — larger head, longer mop, purple & white, and a long list of earlier lessons baked in. It's a new product for a new market."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

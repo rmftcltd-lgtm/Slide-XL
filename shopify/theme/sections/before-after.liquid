@@ -1,0 +1,34 @@
+<section class="band">
+  <div class="shell split">
+    <div>
+      <p class="eyebrow eyebrow--purple">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+      <p class="lede">{{ section.settings.lede }}</p>
+    </div>
+    <div>
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'rounded', loading: 'lazy', widths: '600,900,1200', sizes: '(min-width: 900px) 50vw, 100vw' }}
+      {% else %}
+        {{ 'before-after-tamanui.png' | asset_url | image_tag: class: 'rounded', loading: 'lazy' }}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Before & after",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "eyebrow", "default": "Tamanui-approved", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "default": "Muddy noses. Shed hair. Spotless after.", "label": "Heading" },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Intro",
+      "default": "The campaign runs on real mess — not studio glitter. If your dog treats the hallway like a racetrack, you already know why Slide XL exists."
+    }
+  ],
+  "presets": [{ "name": "Before & after" }]
+}
+{% endschema %}

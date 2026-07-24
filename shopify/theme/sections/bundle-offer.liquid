@@ -1,0 +1,112 @@
+<section class="band band--soft" id="bundle">
+  <div class="shell split">
+    <div>
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'rounded shadow', loading: 'lazy', widths: '600,900,1200', sizes: '(min-width: 900px) 50vw, 100vw' }}
+      {% else %}
+        {{ 'bundle-flatlay.png' | asset_url | image_tag: class: 'rounded shadow', loading: 'lazy' }}
+      {% endif %}
+    </div>
+    <div>
+      <p class="eyebrow eyebrow--purple">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+      <p class="lede">{{ section.settings.lede }}</p>
+      {% if section.settings.product != blank %}
+        {% assign p = section.settings.product %}
+        <div class="price-row">
+          <span class="price">{{ p.price | money }}</span>
+          {% if p.compare_at_price > p.price %}
+            <span class="compare">{{ p.compare_at_price | money }} RRP</span>
+            <span class="badge">Save {{ p.compare_at_price | minus: p.price | money }}</span>
+          {% endif %}
+        </div>
+        <p class="shipping-note">{{ section.settings.shipping_note }}</p>
+        <ul class="bundle-list">
+          {% for block in section.blocks %}
+            <li {{ block.shopify_attributes }}>
+              <div>
+                <strong>{{ block.settings.title }}</strong>
+                <p>{{ block.settings.body }}</p>
+              </div>
+              <span>{{ block.settings.rrp }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="hero__cta">
+          <form method="post" action="{{ routes.cart_add_url }}">
+            <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+            <button class="btn btn--primary" type="submit">{{ section.settings.cta_label }}</button>
+          </form>
+          <a class="btn btn--outline" href="{{ p.url }}">Full details</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bundle offer",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Bundle product" },
+    { "type": "image_picker", "id": "image", "label": "Bundle image" },
+    { "type": "text", "id": "eyebrow", "default": "Only product on offer", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "default": "Pre-Launch Bundle", "label": "Heading" },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Intro",
+      "default": "Mop + 4 refills + collapsible bucket — shipped free across the USA"
+    },
+    {
+      "type": "text",
+      "id": "shipping_note",
+      "label": "Shipping note",
+      "default": "Including shipping right across the USA"
+    },
+    { "type": "text", "id": "cta_label", "default": "Add Pre-Launch Bundle", "label": "CTA" }
+  ],
+  "blocks": [
+    {
+      "type": "component",
+      "name": "Component",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Slide XL Mop with head" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "XL head, longer pole, slide-wringer, purple & white." },
+        { "type": "text", "id": "rrp", "label": "RRP label", "default": "$89.95" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle offer",
+      "blocks": [
+        {
+          "type": "component",
+          "settings": {
+            "title": "Slide XL Mop with head",
+            "body": "XL head, longer pole, slide-wringer, purple & white.",
+            "rrp": "$89.95"
+          }
+        },
+        {
+          "type": "component",
+          "settings": {
+            "title": "4× Mop head refills",
+            "body": "Extra ridged heads ready for heavy shedding seasons.",
+            "rrp": "$24.95 ea"
+          }
+        },
+        {
+          "type": "component",
+          "settings": {
+            "title": "Collapsible bucket",
+            "body": "Purple & white wheeled bucket that folds flat for storage.",
+            "rrp": "$29.95"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

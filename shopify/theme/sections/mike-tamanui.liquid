@@ -1,0 +1,50 @@
+<section class="band band--ink" id="mike">
+  <div class="shell split">
+    <div>
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'rounded', loading: 'lazy', widths: '600,900,1200', sizes: '(min-width: 900px) 50vw, 100vw' }}
+      {% else %}
+        {{ 'mike-tamanui-coast.png' | asset_url | image_tag: class: 'rounded', loading: 'lazy' }}
+      {% endif %}
+      <p class="caption">{{ section.settings.caption }}</p>
+    </div>
+    <div>
+      <p class="eyebrow eyebrow--khaki">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.body }}</p>
+      <p>{{ section.settings.body_2 }}</p>
+      <blockquote>{{ section.settings.quote }}</blockquote>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Mike & Tamanui",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "caption", "default": "Mike the Mop King & Tamanui — the faces of the Slide XL campaign.", "label": "Caption" },
+    { "type": "text", "id": "eyebrow", "default": "The Aussie behind the mop", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "default": "Meet Mike the Mop King — and Tamanui.", "label": "Heading" },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "Michael Clegg invents like he cleans: no nonsense, plenty of heart, and a healthy disrespect for floors that stay filthy. Think crocodile-hunter energy — except the wildlife is shedding on your timber."
+    },
+    {
+      "type": "textarea",
+      "id": "body_2",
+      "label": "Body 2",
+      "default": "Slide XL is his V4.0: larger mop head, longer reach, purple-and-white finish, and the wrinkles of earlier versions ironed out. Tamanui isn't a prop — he's the product tester who keeps Mike honest."
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "If it can handle Tamanui after a beach run, it can handle your living room."
+    }
+  ],
+  "presets": [{ "name": "Mike & Tamanui" }]
+}
+{% endschema %}
