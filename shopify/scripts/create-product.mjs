@@ -90,6 +90,169 @@ async function shopify(token, method, route, body) {
   return data;
 }
 
+async function graphql(token, query, variables) {
+  return shopify(token, "POST", "/graphql.json", { query, variables });
+}
+
+/**
+ * Shop currency may be NZD while the USA market sells in USD.
+ * Without a market price list, Shopify converts 149.95 NZD → ~$88 USD.
+ * Pin the USA market catalog to the intended USD amounts.
+ */
+async function ensureUsdMarketPrices(token, productGid, variantGid) {
+  const CATALOG_TITLE = "United States USD";
+  const PRICE_LIST_NAME = "US Dollar prices";
+
+  const marketsRes = await graphql(
+    token,
+    `{ markets(first: 20) { nodes { id name handle primary currencySettings { baseCurrency { currencyCode } } catalogs(first: 10) { nodes { id title status priceList { id name currency } } } } } }`,
+  );
+  const markets = marketsRes?.data?.markets?.nodes || [];
+  const usMarket =
+    markets.find((m) => m.handle === "united-states" || m.name === "United States") ||
+    markets.find((m) => m.primary);
+  if (!usMarket) {
+    console.warn("No United States market found — skipping USD price list.");
+    return;
+  }
+
+  let catalog = (usMarket.catalogs?.nodes || []).find((c) => c.title === CATALOG_TITLE);
+  if (!catalog) {
+    const created = await graphql(
+      token,
+      `mutation($input: CatalogCreateInput!) {
+        catalogCreate(input: $input) {
+          catalog { id title }
+          userErrors { message }
+        }
+      }`,
+      {
+        input: {
+          title: CATALOG_TITLE,
+          status: "ACTIVE",
+          context: { marketIds: [usMarket.id] },
+        },
+      },
+    );
+    const errs = created?.data?.catalogCreate?.userErrors || [];
+    if (errs.length) throw new Error(`catalogCreate: ${JSON.stringify(errs)}`);
+    catalog = created.data.catalogCreate.catalog;
+    console.log(`Created market catalog ${catalog.id}`);
+  }
+
+  let priceListId = catalog.priceList?.id;
+  if (!priceListId) {
+    const created = await graphql(
+      token,
+      `mutation($input: PriceListCreateInput!) {
+        priceListCreate(input: $input) {
+          priceList { id name currency }
+          userErrors { message }
+        }
+      }`,
+      {
+        input: {
+          name: PRICE_LIST_NAME,
+          currency: "USD",
+          catalogId: catalog.id,
+          parent: {
+            adjustment: { type: "PERCENTAGE_INCREASE", value: 0 },
+            settings: { compareAtMode: "ADJUSTED" },
+          },
+        },
+      },
+    );
+    const errs = created?.data?.priceListCreate?.userErrors || [];
+    if (errs.length) throw new Error(`priceListCreate: ${JSON.stringify(errs)}`);
+    priceListId = created.data.priceListCreate.priceList.id;
+    console.log(`Created USD price list ${priceListId}`);
+  }
+
+  // Ensure catalog has a publication and the product is published to it
+  const catNode = await graphql(
+    token,
+    `query($id: ID!) {
+      node(id: $id) {
+        ... on MarketCatalog {
+          id
+          publication { id }
+        }
+      }
+    }`,
+    { id: catalog.id },
+  );
+  let publicationId = catNode?.data?.node?.publication?.id;
+  if (!publicationId) {
+    const pub = await graphql(
+      token,
+      `mutation($input: PublicationCreateInput!) {
+        publicationCreate(input: $input) {
+          publication { id }
+          userErrors { message }
+        }
+      }`,
+      { input: { catalogId: catalog.id, defaultState: "ALL_PRODUCTS", autoPublish: true } },
+    );
+    const errs = pub?.data?.publicationCreate?.userErrors || [];
+    if (errs.length) throw new Error(`publicationCreate: ${JSON.stringify(errs)}`);
+    publicationId = pub.data.publicationCreate.publication.id;
+  }
+
+  await graphql(
+    token,
+    `mutation($id: ID!, $input: [PublicationInput!]!) {
+      publishablePublish(id: $id, input: $input) {
+        userErrors { message }
+      }
+    }`,
+    { id: productGid, input: [{ publicationId }] },
+  );
+
+  const fixed = await graphql(
+    token,
+    `mutation($priceListId: ID!, $prices: [PriceListPriceInput!]!) {
+      priceListFixedPricesAdd(priceListId: $priceListId, prices: $prices) {
+        prices { price { amount currencyCode } compareAtPrice { amount currencyCode } }
+        userErrors { message }
+      }
+    }`,
+    {
+      priceListId,
+      prices: [
+        {
+          variantId: variantGid,
+          price: { amount: PRICE, currencyCode: "USD" },
+          compareAtPrice: { amount: COMPARE, currencyCode: "USD" },
+        },
+      ],
+    },
+  );
+  const fixedErrs = fixed?.data?.priceListFixedPricesAdd?.userErrors || [];
+  if (fixedErrs.length) throw new Error(`priceListFixedPricesAdd: ${JSON.stringify(fixedErrs)}`);
+
+  const check = await graphql(
+    token,
+    `query($id: ID!) {
+      product(id: $id) {
+        variants(first: 1) {
+          nodes {
+            contextualPricing(context: { country: US }) {
+              price { amount currencyCode }
+              compareAtPrice { amount currencyCode }
+            }
+          }
+        }
+      }
+    }`,
+    { id: productGid },
+  );
+  const us = check?.data?.product?.variants?.nodes?.[0]?.contextualPricing;
+  console.log(
+    `USA storefront price: $${us?.price?.amount} ${us?.price?.currencyCode}` +
+      (us?.compareAtPrice ? ` (RRP $${us.compareAtPrice.amount})` : ""),
+  );
+}
+
 async function stagedUpload(token, filePath) {
   const filename = path.basename(filePath);
   const bytes = readFileSync(filePath);
@@ -188,9 +351,17 @@ async function main() {
     }
   }
 
+  console.log("Pinning USA market prices in USD…");
+  await ensureUsdMarketPrices(
+    token,
+    `gid://shopify/Product/${product.id}`,
+    `gid://shopify/ProductVariant/${product.variants[0].id}`,
+  );
+
   console.log("\nDone.");
   console.log(`Product: ${product.title}`);
   console.log(`Handle:  ${product.handle}`);
+  console.log(`Price:   $${PRICE} USD (compare-at $${COMPARE} USD)`);
   console.log(`Admin:   https://${STORE}/admin/products/${product.id}`);
   console.log(`Storefront: https://${STORE}/products/${product.handle}`);
 }

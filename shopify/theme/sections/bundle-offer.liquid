@@ -29,9 +29,9 @@
       {% endif %}
       {% if p != blank %}
         <div class="price-row">
-          <span class="price">{{ p.price | money }}</span>
+          <span class="price">{{ p.price | money_with_currency }}</span>
           {% if p.compare_at_price > p.price %}
-            <span class="compare">{{ p.compare_at_price | money }} RRP</span>
+            <span class="compare">{{ p.compare_at_price | money_with_currency }} RRP</span>
             <span class="badge">Save {{ p.compare_at_price | minus: p.price | money }}</span>
           {% endif %}
         </div>

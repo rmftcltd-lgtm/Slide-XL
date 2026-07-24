@@ -33,7 +33,7 @@
       {% endif %}
       <a class="btn btn--primary" href="{{ bundle_url }}">
         {% if p != blank %}
-          {{ section.settings.cta_label }} — {{ p.price | money }}
+          {{ section.settings.cta_label }} — {{ p.price | money_with_currency }}
         {% else %}
           {{ section.settings.cta_label }}
         {% endif %}

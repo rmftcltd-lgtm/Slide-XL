@@ -35,9 +35,9 @@
       {% endif %}
       {% assign current_variant = product.selected_or_first_available_variant %}
       <div class="price-row">
-        <span class="price">{{ current_variant.price | money }}</span>
+        <span class="price">{{ current_variant.price | money_with_currency }}</span>
         {% if current_variant.compare_at_price > current_variant.price %}
-          <span class="compare">{{ current_variant.compare_at_price | money }} RRP</span>
+          <span class="compare">{{ current_variant.compare_at_price | money_with_currency }} RRP</span>
           <span class="badge">Save {{ current_variant.compare_at_price | minus: current_variant.price | money }}</span>
         {% endif %}
       </div>
@@ -46,7 +46,7 @@
         <input type="hidden" name="id" value="{{ current_variant.id }}">
         <button class="btn btn--primary" type="submit" {% unless current_variant.available %}disabled{% endunless %}>
           {% if current_variant.available %}
-            {{ 'products.product.add_to_cart' | t }} — {{ current_variant.price | money }}
+            {{ 'products.product.add_to_cart' | t }} — {{ current_variant.price | money_with_currency }}
           {% else %}
             {{ 'products.product.sold_out' | t }}
           {% endif %}

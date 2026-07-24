@@ -14,7 +14,9 @@ Bundle contents (single Shopify product):
 | Slide XL mop with head | $89.95 |
 | 4× mop head refills | $24.95 ea |
 | Collapsible bucket | $29.95 |
-| **Live price** | **$149.95** (shipping included USA) |
+| **Live price** | **$149.95 USD** (shipping included USA) |
+
+> Note: if the Shopify shop currency is still NZD, the deploy script pins a **United States** market price list so customers see **$149.95 USD** (not an NZD→USD conversion).
 
 ## One-time Shopify setup
 
