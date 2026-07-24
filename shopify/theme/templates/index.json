@@ -3,13 +3,14 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "eyebrow": "Mike the Mop King · USA Pre-Launch",
+        "eyebrow": "Mike the Mop King \u00b7 USA Pre-Launch",
         "brand": "Slide XL",
         "headline": "Pet hair? She'll be right.",
-        "subcopy": "Sweep, mop, and dry in one go. Hair grabs on — then falls off when the head hits water. Built bigger, longer, and purple for American floors and Aussie-sized mess.",
+        "subcopy": "Sweep, mop, and dry in one go. Hair grabs on \u2014 then falls off when the head hits water. Built bigger, longer, and purple for American floors and Aussie-sized mess.",
         "cta_label": "Grab the Bundle",
         "secondary_label": "See what's in the box",
-        "fine_print": "Free shipping across the USA"
+        "fine_print": "Free shipping across the USA",
+        "product": "gid://shopify/Product/10035954516215"
       }
     },
     "how": {
@@ -19,7 +20,7 @@
           "type": "step",
           "settings": {
             "title": "Sweep",
-            "body": "The ridged XL head grabs pet hair, dander, dust, and crumbs in one pass — no vacuum warm-up required."
+            "body": "The ridged XL head grabs pet hair, dander, dust, and crumbs in one pass \u2014 no vacuum warm-up required."
           }
         },
         "s2": {
@@ -37,11 +38,15 @@
           }
         }
       },
-      "block_order": ["s1", "s2", "s3"],
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
       "settings": {
         "eyebrow": "How Slide XL works",
-        "heading": "One tool. Sweep, mop, dry — hair gone.",
-        "lede": "Same hard-won Aussie thinking that started it all — rebuilt as V4.0 with a larger head, longer pole, and a wringer that actually keeps up with shedding season."
+        "heading": "One tool. Sweep, mop, dry \u2014 hair gone.",
+        "lede": "Same hard-won Aussie thinking that started it all \u2014 rebuilt as V4.0 with a larger head, longer pole, and a wringer that actually keeps up with shedding season."
       }
     },
     "bundle": {
@@ -58,7 +63,7 @@
         "c2": {
           "type": "component",
           "settings": {
-            "title": "4× Mop head refills",
+            "title": "4\u00d7 Mop head refills",
             "body": "Extra ridged heads ready for heavy shedding seasons.",
             "rrp": "$24.95 ea"
           }
@@ -72,13 +77,18 @@
           }
         }
       },
-      "block_order": ["c1", "c2", "c3"],
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
       "settings": {
         "eyebrow": "Only product on offer",
         "heading": "Pre-Launch Bundle",
-        "lede": "Mop + 4 refills + collapsible bucket — shipped free across the USA",
+        "lede": "Mop + 4 refills + collapsible bucket \u2014 shipped free across the USA",
         "shipping_note": "Including shipping right across the USA",
-        "cta_label": "Add Pre-Launch Bundle"
+        "cta_label": "Add Pre-Launch Bundle",
+        "product": "gid://shopify/Product/10035954516215"
       }
     },
     "forwho": {
@@ -88,7 +98,7 @@
           "type": "audience",
           "settings": {
             "title": "Pet owners",
-            "body": "Fur, muddy paws, nose prints — Tamanui-level chaos. Hair releases in water so you're not peeling it off by hand.",
+            "body": "Fur, muddy paws, nose prints \u2014 Tamanui-level chaos. Hair releases in water so you're not peeling it off by hand.",
             "tone": "purple"
           }
         },
@@ -112,12 +122,17 @@
           "type": "audience",
           "settings": {
             "title": "Busy households",
-            "body": "Kids, guests, entryways — skip the vacuum-then-mop dance.",
+            "body": "Kids, guests, entryways \u2014 skip the vacuum-then-mop dance.",
             "tone": "khaki"
           }
         }
       },
-      "block_order": ["a1", "a2", "a3", "a4"],
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4"
+      ],
       "settings": {}
     },
     "mike": {
@@ -142,7 +157,7 @@
           "type": "item",
           "settings": {
             "question": "Why is it ideal for pet owners?",
-            "answer": "The ridged head grabs loose hair as you go. When the head touches water, that hair releases — so rinsing is part of the clean, not an extra chore."
+            "answer": "The ridged head grabs loose hair as you go. When the head touches water, that hair releases \u2014 so rinsing is part of the clean, not an extra chore."
           }
         },
         "f3": {
@@ -156,13 +171,26 @@
           "type": "item",
           "settings": {
             "question": "Is this related to older Aussie mops?",
-            "answer": "Slide XL is Mike's V4.0 — larger head, longer mop, purple & white, and a long list of earlier lessons baked in. It's a new product for a new market."
+            "answer": "Slide XL is Mike's V4.0 \u2014 larger head, longer mop, purple & white, and a long list of earlier lessons baked in. It's a new product for a new market."
           }
         }
       },
-      "block_order": ["f1", "f2", "f3", "f4"],
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
       "settings": {}
     }
   },
-  "order": ["hero", "how", "bundle", "forwho", "mike", "ba", "faq"]
+  "order": [
+    "hero",
+    "how",
+    "bundle",
+    "forwho",
+    "mike",
+    "ba",
+    "faq"
+  ]
 }
