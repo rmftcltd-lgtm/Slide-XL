@@ -15,14 +15,11 @@
       <a href="{{ routes.root_url }}#how-it-works">How it works</a>
       <a href="{{ routes.root_url }}#for-who">Who it's for</a>
       <a href="{{ routes.root_url }}#mike">Mike &amp; Tamanui</a>
-      {% assign bundle = collections.all.products | where: 'handle', 'pre-launch-bundle' | first %}
-      {% if bundle == blank %}
-        {% assign bundle = all_products['pre-launch-bundle'] %}
-      {% endif %}
-      {% if bundle != blank %}
+      {% assign bundle = all_products['pre-launch-bundle'] %}
+      {% if bundle != blank and bundle.url != blank %}
         <a href="{{ bundle.url }}">Bundle</a>
       {% else %}
-        <a href="{{ routes.all_products_collection_url }}">Shop</a>
+        <a href="/products/pre-launch-bundle">Bundle</a>
       {% endif %}
     </nav>
     <div class="site-header__actions">

@@ -10,7 +10,7 @@
         "cta_label": "Grab the Bundle",
         "secondary_label": "See what's in the box",
         "fine_print": "Free shipping across the USA",
-        "product": "gid://shopify/Product/10035954516215"
+        "product": "10035954516215"
       }
     },
     "how": {
@@ -88,7 +88,7 @@
         "lede": "Mop + 4 refills + collapsible bucket \u2014 shipped free across the USA",
         "shipping_note": "Including shipping right across the USA",
         "cta_label": "Add Pre-Launch Bundle",
-        "product": "gid://shopify/Product/10035954516215"
+        "product": "10035954516215"
       }
     },
     "forwho": {

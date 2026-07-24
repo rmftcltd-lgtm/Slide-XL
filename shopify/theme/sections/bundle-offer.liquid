@@ -18,8 +18,16 @@
       <p class="eyebrow eyebrow--purple">{{ section.settings.eyebrow }}</p>
       <h2>{{ section.settings.heading }}</h2>
       <p class="lede">{{ section.settings.lede }}</p>
-      {% if section.settings.product != blank %}
-        {% assign p = section.settings.product %}
+      {% assign p = section.settings.product %}
+      {% if p == blank %}
+        {% assign p = all_products['pre-launch-bundle'] %}
+      {% endif %}
+      {% if p != blank and p.url != blank %}
+        {% assign bundle_url = p.url %}
+      {% else %}
+        {% assign bundle_url = '/products/pre-launch-bundle' %}
+      {% endif %}
+      {% if p != blank %}
         <div class="price-row">
           <span class="price">{{ p.price | money }}</span>
           {% if p.compare_at_price > p.price %}
@@ -27,26 +35,23 @@
             <span class="badge">Save {{ p.compare_at_price | minus: p.price | money }}</span>
           {% endif %}
         </div>
-        <p class="shipping-note">{{ section.settings.shipping_note }}</p>
-        <ul class="bundle-list">
-          {% for block in section.blocks %}
-            <li {{ block.shopify_attributes }}>
-              <div>
-                <strong>{{ block.settings.title }}</strong>
-                <p>{{ block.settings.body }}</p>
-              </div>
-              <span>{{ block.settings.rrp }}</span>
-            </li>
-          {% endfor %}
-        </ul>
-        <div class="hero__cta">
-          <form method="post" action="{{ routes.cart_add_url }}">
-            <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
-            <button class="btn btn--primary" type="submit">{{ section.settings.cta_label }}</button>
-          </form>
-          <a class="btn btn--outline" href="{{ p.url }}">Full details</a>
-        </div>
       {% endif %}
+      <p class="shipping-note">{{ section.settings.shipping_note }}</p>
+      <ul class="bundle-list">
+        {% for block in section.blocks %}
+          <li {{ block.shopify_attributes }}>
+            <div>
+              <strong>{{ block.settings.title }}</strong>
+              <p>{{ block.settings.body }}</p>
+            </div>
+            <span>{{ block.settings.rrp }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="{{ bundle_url }}">{{ section.settings.cta_label }}</a>
+        <a class="btn btn--outline" href="{{ bundle_url }}">Full details</a>
+      </div>
     </div>
   </div>
 </section>

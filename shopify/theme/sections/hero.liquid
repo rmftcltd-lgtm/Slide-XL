@@ -22,18 +22,23 @@
     </h1>
     <p class="hero__sub">{{ section.settings.subcopy }}</p>
     <div class="hero__cta">
-      {% if section.settings.product != blank %}
-        {% assign p = section.settings.product %}
-        <form method="post" action="{{ routes.cart_add_url }}">
-          <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
-          <button class="btn btn--primary" type="submit">
-            {{ section.settings.cta_label }} — {{ p.price | money }}
-          </button>
-        </form>
-        <a class="btn btn--ghost" href="{{ p.url }}">{{ section.settings.secondary_label }}</a>
-      {% else %}
-        <a class="btn btn--primary" href="{{ routes.all_products_collection_url }}">{{ section.settings.cta_label }}</a>
+      {% assign p = section.settings.product %}
+      {% if p == blank %}
+        {% assign p = all_products['pre-launch-bundle'] %}
       {% endif %}
+      {% if p != blank and p.url != blank %}
+        {% assign bundle_url = p.url %}
+      {% else %}
+        {% assign bundle_url = '/products/pre-launch-bundle' %}
+      {% endif %}
+      <a class="btn btn--primary" href="{{ bundle_url }}">
+        {% if p != blank %}
+          {{ section.settings.cta_label }} — {{ p.price | money }}
+        {% else %}
+          {{ section.settings.cta_label }}
+        {% endif %}
+      </a>
+      <a class="btn btn--ghost" href="{{ bundle_url }}">{{ section.settings.secondary_label }}</a>
     </div>
     {% if section.settings.fine_print != blank %}
       <p class="hero__fine">{{ section.settings.fine_print }}</p>
