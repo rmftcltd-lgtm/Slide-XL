@@ -42,10 +42,14 @@ Open [http://localhost:3000](http://localhost:3000).
 - `npm run start` — serve production build
 - `npm run lint` — ESLint
 
-## Brand notes
+## Shopify store (production path)
 
-- Inventor: Michael Clegg — **Mike the Mop King**
-- Campaign co-star: **Tamanui**
-- Look: royal purple + white product identity, Aussie adventure energy
-- Positioning: pet owners first; also barbers, timber & tile homes
-- Messaging inspired by the sweep/mop/dry + pet-hair release thinking of earlier Aussie PVA mops — Slide XL is positioned as V4.0 (larger head, longer mop) without referencing prior brand names on-site
+The branded Online Store 2.0 theme lives in `shopify/theme`.
+
+```bash
+export SHOPIFY_STORE="your-store.myshopify.com"
+export SHOPIFY_ADMIN_TOKEN="shpat_xxxxxxxx"
+npm run shopify:deploy
+```
+
+See `shopify/README.md` for scopes, free USA shipping, and publish steps.
