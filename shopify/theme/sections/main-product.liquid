@@ -1,0 +1,73 @@
+<section class="band band--wash product-page">
+  <div class="shell split">
+    <div>
+      {% if product.featured_image %}
+        <img
+          class="rounded shadow"
+          src="{{ product.featured_image | image_url: width: 1400 }}"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}"
+          loading="eager"
+        >
+      {% endif %}
+      {% if product.images.size > 1 %}
+        <div class="thumbs">
+          {% for image in product.images %}
+            {% unless forloop.first %}
+              <img
+                src="{{ image | image_url: width: 400 }}"
+                alt="{{ image.alt | default: product.title | escape }}"
+                width="400"
+                height="300"
+                loading="lazy"
+              >
+            {% endunless %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    <div>
+      <p class="eyebrow eyebrow--purple">USA Pre-Launch · Limited offer</p>
+      <h1>{{ product.title }}</h1>
+      {% if product.description != blank %}
+        <p class="lede">{{ product.description | strip_html | truncate: 180 }}</p>
+      {% endif %}
+      {% assign current_variant = product.selected_or_first_available_variant %}
+      <div class="price-row">
+        <span class="price">{{ current_variant.price | money }}</span>
+        {% if current_variant.compare_at_price > current_variant.price %}
+          <span class="compare">{{ current_variant.compare_at_price | money }} RRP</span>
+          <span class="badge">Save {{ current_variant.compare_at_price | minus: current_variant.price | money }}</span>
+        {% endif %}
+      </div>
+      <p class="shipping-note">Including shipping right across the USA</p>
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+        <button class="btn btn--primary" type="submit" {% unless current_variant.available %}disabled{% endunless %}>
+          {% if current_variant.available %}
+            {{ 'products.product.add_to_cart' | t }} — {{ current_variant.price | money }}
+          {% else %}
+            {{ 'products.product.sold_out' | t }}
+          {% endif %}
+        </button>
+      {% endform %}
+      {% if product.description != blank %}
+        <div class="product-body">{{ product.description }}</div>
+      {% endif %}
+      <dl class="specs">
+        <div><dt>Handle</dt><dd>Longer XL reach</dd></div>
+        <div><dt>Head</dt><dd>Larger ridged pad</dd></div>
+        <div><dt>Finish</dt><dd>Purple &amp; white</dd></div>
+        <div><dt>Shipping</dt><dd>Included (USA)</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": []
+}
+{% endschema %}

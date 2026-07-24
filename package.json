@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "shopify:check": "shopify theme check --path shopify/theme",
+    "shopify:dev": "shopify theme dev --path shopify/theme",
+    "shopify:push": "shopify theme push --path shopify/theme --unpublished --theme \"Slide XL\"",
+    "shopify:product": "node shopify/scripts/create-product.mjs",
+    "shopify:deploy": "bash shopify/scripts/deploy.sh"
   },
   "dependencies": {
     "lucide-react": "^1.26.0",
@@ -19,6 +24,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@shopify/cli": "^4.5.2",
+    "@shopify/theme": "^3.58.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

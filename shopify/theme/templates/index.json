@@ -1,0 +1,196 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Mike the Mop King \u00b7 USA Pre-Launch",
+        "brand": "Slide XL",
+        "headline": "Pet hair? She'll be right.",
+        "subcopy": "Sweep, mop, and dry in one go. Hair grabs on \u2014 then falls off when the head hits water. Built bigger, longer, and purple for American floors and Aussie-sized mess.",
+        "cta_label": "Grab the Bundle",
+        "secondary_label": "See what's in the box",
+        "fine_print": "Free shipping across the USA",
+        "product": "10035954516215"
+      }
+    },
+    "how": {
+      "type": "how-it-works",
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Sweep",
+            "body": "The ridged XL head grabs pet hair, dander, dust, and crumbs in one pass \u2014 no vacuum warm-up required."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Mop",
+            "body": "Wet it down and the same head washes timber, tile, and sealed floors without leaving a swamp behind."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Release",
+            "body": "Dip the head in water and the hair lets go. Slide-wringer squeezes it clean. Refill when you're ready."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "eyebrow": "How Slide XL works",
+        "heading": "One tool. Sweep, mop, dry \u2014 hair gone.",
+        "lede": "Same hard-won Aussie thinking that started it all \u2014 rebuilt with a larger head, longer pole, and a wringer that actually keeps up with shedding season."
+      }
+    },
+    "bundle": {
+      "type": "bundle-offer",
+      "blocks": {
+        "c1": {
+          "type": "component",
+          "settings": {
+            "title": "Slide XL Mop with head",
+            "body": "XL head, longer pole, slide-wringer, purple & white.",
+            "rrp": "$89.95"
+          }
+        },
+        "c2": {
+          "type": "component",
+          "settings": {
+            "title": "4\u00d7 Mop head refills",
+            "body": "Extra ridged heads ready for heavy shedding seasons.",
+            "rrp": "$24.95 ea"
+          }
+        },
+        "c3": {
+          "type": "component",
+          "settings": {
+            "title": "Collapsible bucket",
+            "body": "Purple & white wheeled bucket that folds flat for storage.",
+            "rrp": "$29.95"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "eyebrow": "Only product on offer",
+        "heading": "Pre-Launch Bundle",
+        "lede": "Mop + 4 refills + collapsible bucket \u2014 shipped free across the USA",
+        "shipping_note": "Including shipping right across the USA",
+        "cta_label": "Add Pre-Launch Bundle",
+        "product": "10035954516215"
+      }
+    },
+    "forwho": {
+      "type": "for-who",
+      "blocks": {
+        "a1": {
+          "type": "audience",
+          "settings": {
+            "title": "Pet owners",
+            "body": "Fur, muddy paws, nose prints \u2014 Tamanui-level chaos. Hair releases in water so you're not peeling it off by hand.",
+            "tone": "purple"
+          }
+        },
+        "a2": {
+          "type": "audience",
+          "settings": {
+            "title": "Timber & tile homes",
+            "body": "Gentle enough for sealed hardwood and tough enough for grout lines.",
+            "tone": "timber"
+          }
+        },
+        "a3": {
+          "type": "audience",
+          "settings": {
+            "title": "Barbers & salons",
+            "body": "Hair on the floor all day. Slide XL picks it up wet or dry and rinses clean between clients.",
+            "tone": "ocean"
+          }
+        },
+        "a4": {
+          "type": "audience",
+          "settings": {
+            "title": "Busy households",
+            "body": "Kids, guests, entryways \u2014 skip the vacuum-then-mop dance.",
+            "tone": "khaki"
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4"
+      ],
+      "settings": {}
+    },
+    "mike": {
+      "type": "mike-tamanui",
+      "settings": {}
+    },
+    "ba": {
+      "type": "before-after",
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "f1": {
+          "type": "item",
+          "settings": {
+            "question": "What is in the Pre-Launch Bundle?",
+            "answer": "One Slide XL mop with head (RRP $89.95), four additional mop head refills (RRP $24.95 each), and one collapsible wheeled bucket (RRP $29.95). Bundle price $149.95 including shipping across the USA."
+          }
+        },
+        "f2": {
+          "type": "item",
+          "settings": {
+            "question": "Why is it ideal for pet owners?",
+            "answer": "The ridged head grabs loose hair as you go. When the head touches water, that hair releases \u2014 so rinsing is part of the clean, not an extra chore."
+          }
+        },
+        "f3": {
+          "type": "item",
+          "settings": {
+            "question": "Do you ship outside the USA?",
+            "answer": "Not yet. We're launching USA-first with markets structured for Australia, Canada, the UK, and New Zealand next."
+          }
+        },
+        "f4": {
+          "type": "item",
+          "settings": {
+            "question": "Is this related to older Aussie mops?",
+            "answer": "Slide XL is Mike's latest mop \u2014 larger head, longer mop, purple & white, and a long list of earlier lessons baked in. It's a new product for a new market."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "how",
+    "bundle",
+    "forwho",
+    "mike",
+    "ba",
+    "faq"
+  ]
+}
