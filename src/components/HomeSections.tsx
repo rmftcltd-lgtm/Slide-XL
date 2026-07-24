@@ -32,12 +32,6 @@ export function Hero() {
               label={`Grab the Bundle — $${product.price.amount}`}
               redirectToCart
             />
-            <Link
-              href="/product/pre-launch-bundle"
-              className="inline-flex items-center justify-center rounded-md border border-white/40 bg-white/10 px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-white backdrop-blur transition hover:bg-white/20"
-            >
-              See what&apos;s in the box
-            </Link>
           </div>
           <p className="mt-4 text-sm text-white/70">
             Free shipping across the USA · Was ${product.compareAtPrice.amount.toFixed(2)} RRP
