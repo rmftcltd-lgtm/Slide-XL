@@ -1,0 +1,28 @@
+{% comment %}
+  Per-visitor special-price countdown (6.5 minutes).
+  theme: "hero" (on dark) or "ink" (on light)
+{% endcomment %}
+{% assign countdown_theme = theme | default: 'ink' %}
+<div
+  class="offer-countdown offer-countdown--{{ countdown_theme }}"
+  data-offer-countdown
+  data-duration-ms="390000"
+  hidden
+>
+  <p class="offer-countdown__label">Special bundle price reserved for</p>
+  <div class="offer-countdown__clock" aria-hidden="true">
+    <span class="offer-countdown__unit">
+      <span data-offer-mins>06</span>
+      <small>min</small>
+    </span>
+    <span class="offer-countdown__sep">:</span>
+    <span class="offer-countdown__unit">
+      <span data-offer-secs>30</span>
+      <small>sec</small>
+    </span>
+  </div>
+  <p class="offer-countdown__hint">Checkout before the timer ends to lock in this deal.</p>
+  <p class="visually-hidden" data-offer-sr aria-live="polite">
+    Special bundle price reserved for 6 minutes and 30 seconds.
+  </p>
+</div>

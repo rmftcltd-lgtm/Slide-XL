@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { AddToCartButton } from "./AddToCartButton";
 import { BundlePricing } from "./BundlePricing";
+import { OfferCountdown } from "./OfferCountdown";
 import { getProductByHandle } from "@/lib/products";
 
 export function Hero() {
@@ -25,7 +26,10 @@ export function Hero() {
             the head hits water. Built bigger, longer, and purple for American
             floors and Aussie-sized mess.
           </p>
-          <div className="animate-slide-in-delay-2 mt-8 flex flex-wrap items-center gap-4">
+          <div className="animate-slide-in-delay-2">
+            <OfferCountdown theme="hero" />
+          </div>
+          <div className="animate-slide-in-delay-2 mt-6 flex flex-wrap items-center gap-4">
             <AddToCartButton
               productId={product.id}
               label={`Grab the Bundle — $${product.price.amount}`}
@@ -321,7 +325,8 @@ export function BundleOffer() {
           <div className="mt-8">
             <BundlePricing product={product} />
           </div>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <OfferCountdown theme="ink" />
+          <div className="mt-6 flex flex-wrap gap-3">
             <AddToCartButton productId={product.id} redirectToCheckout />
           </div>
         </div>

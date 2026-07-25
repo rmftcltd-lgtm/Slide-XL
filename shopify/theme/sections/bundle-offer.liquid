@@ -43,6 +43,7 @@
           </li>
         {% endfor %}
       </ul>
+      {% render 'offer-countdown', theme: 'ink' %}
       <div class="hero__cta">
         {% render 'checkout-cta', product: p, label: section.settings.cta_label, class: 'btn btn--primary' %}
       </div>

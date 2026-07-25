@@ -21,6 +21,7 @@
       <span class="hero__headline">{{ section.settings.headline }}</span>
     </h1>
     <p class="hero__sub">{{ section.settings.subcopy }}</p>
+    {% render 'offer-countdown', theme: 'hero' %}
     <div class="hero__cta">
       {% assign p = section.settings.product %}
       {% if p == blank %}
