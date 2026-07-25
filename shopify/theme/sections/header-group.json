@@ -2,10 +2,21 @@
   "type": "header",
   "name": "Header group",
   "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "enable": true,
+        "product": "10035954516215",
+        "text": "🇺🇸 Pre-Launch Bundle — Save $70 + Free USA Shipping 🇺🇸",
+        "link": "/#bundle",
+        "show_launcher": true,
+        "launcher_label": "Special Discount"
+      }
+    },
     "header": {
       "type": "header",
       "settings": {}
     }
   },
-  "order": ["header"]
+  "order": ["announcement", "header"]
 }

@@ -15,16 +15,23 @@ export function Hero() {
           <p className="animate-slide-in font-display text-sm font-semibold uppercase tracking-[0.2em] text-khaki">
             Mike the Mop King · USA Pre-Launch
           </p>
-          <h1 className="animate-slide-in-delay-1 mt-4 font-display text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl">
-            <span className="block text-white">Slide XL</span>
-            <span className="mt-2 block text-3xl font-bold text-khaki sm:text-4xl">
-              Pet hair? She&apos;ll be right.
+          <h1 className="animate-slide-in-delay-1 mt-4 font-display font-extrabold leading-[0.95] tracking-tight">
+            <span className="block text-[clamp(2.6rem,7vw,4rem)] text-white">
+              Slide XL
+            </span>
+            <span className="mt-3 block text-[clamp(1.55rem,4.2vw,2.35rem)] uppercase tracking-tight text-white">
+              A full clean for{" "}
+              <span
+                className="inline-block text-transparent"
+                style={{ WebkitTextStroke: "1.5px #b8956c" }}
+              >
+                pet hair floors
+              </span>
             </span>
           </h1>
           <p className="animate-slide-in-delay-2 mt-5 max-w-md text-lg leading-relaxed text-white/85">
             Sweep, mop, and dry in one go. Hair grabs on — then falls off when
-            the head hits water. Built bigger, longer, and purple for American
-            floors and Aussie-sized mess.
+            the head hits water.
           </p>
           <div className="animate-slide-in-delay-2">
             <OfferCountdown theme="hero" />
@@ -32,12 +39,13 @@ export function Hero() {
           <div className="animate-slide-in-delay-2 mt-6 flex flex-wrap items-center gap-4">
             <AddToCartButton
               productId={product.id}
-              label={`Grab the Bundle — $${product.price.amount}`}
+              label="Shop now →"
               redirectToCheckout
+              className="!bg-white !text-ink hover:!bg-khaki"
             />
           </div>
           <p className="mt-4 text-sm text-white/70">
-            Free shipping across the USA · Was ${product.compareAtPrice.amount.toFixed(2)} RRP
+            Pre-Launch Bundle · Free shipping across the USA
           </p>
         </div>
       </div>

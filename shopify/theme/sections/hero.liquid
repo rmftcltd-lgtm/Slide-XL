@@ -18,7 +18,12 @@
     <p class="eyebrow">{{ section.settings.eyebrow }}</p>
     <h1>
       <span class="hero__brand">{{ section.settings.brand }}</span>
-      <span class="hero__headline">{{ section.settings.headline }}</span>
+      <span class="hero__headline">
+        {{ section.settings.headline_lead }}
+        {% if section.settings.headline_outline != blank %}
+          <span class="hero__headline-outline">{{ section.settings.headline_outline }}</span>
+        {% endif %}
+      </span>
     </h1>
     <p class="hero__sub">{{ section.settings.subcopy }}</p>
     {% render 'offer-countdown', theme: 'hero' %}
@@ -27,12 +32,8 @@
       {% if p == blank %}
         {% assign p = all_products['pre-launch-bundle'] %}
       {% endif %}
-      {% if p != blank %}
-        {% capture cta_label %}{{ section.settings.cta_label }} — {{ p.price | money_with_currency }}{% endcapture %}
-      {% else %}
-        {% assign cta_label = section.settings.cta_label %}
-      {% endif %}
-      {% render 'checkout-cta', product: p, label: cta_label, class: 'btn btn--primary' %}
+      {% capture cta_label %}{{ section.settings.cta_label }} →{% endcapture %}
+      {% render 'checkout-cta', product: p, label: cta_label, class: 'btn btn--shop' %}
     </div>
     {% if section.settings.fine_print != blank %}
       <p class="hero__fine">{{ section.settings.fine_print }}</p>
@@ -48,19 +49,30 @@
     { "type": "product", "id": "product", "label": "Featured product" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Mike the Mop King · USA Pre-Launch" },
     { "type": "text", "id": "brand", "label": "Brand", "default": "Slide XL" },
-    { "type": "text", "id": "headline", "label": "Headline", "default": "Pet hair? She'll be right." },
+    {
+      "type": "text",
+      "id": "headline_lead",
+      "label": "Headline (solid)",
+      "default": "A full clean for"
+    },
+    {
+      "type": "text",
+      "id": "headline_outline",
+      "label": "Headline (outline emphasis)",
+      "default": "pet hair floors"
+    },
     {
       "type": "textarea",
       "id": "subcopy",
       "label": "Supporting copy",
-      "default": "Sweep, mop, and dry in one go. Hair grabs on — then falls off when the head hits water. Built bigger, longer, and purple for American floors and Aussie-sized mess."
+      "default": "Sweep, mop, and dry in one go. Hair grabs on — then falls off when the head hits water."
     },
-    { "type": "text", "id": "cta_label", "label": "Primary CTA", "default": "Grab the Bundle" },
+    { "type": "text", "id": "cta_label", "label": "Primary CTA", "default": "Shop now" },
     {
       "type": "text",
       "id": "fine_print",
       "label": "Fine print",
-      "default": "Free shipping across the USA"
+      "default": "Pre-Launch Bundle · Free shipping across the USA"
     }
   ],
   "presets": [{ "name": "Hero" }]

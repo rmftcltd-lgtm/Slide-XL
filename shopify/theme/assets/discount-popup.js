@@ -2,8 +2,10 @@
   var UNLOCKED_KEY = "slidexl_offer_unlocked";
   var EMAIL_KEY = "slidexl_offer_email";
   var DISMISSED_KEY = "slidexl_popup_dismissed";
+  var LAUNCHER_DISMISSED_KEY = "slidexl_launcher_dismissed";
   var ENDS_KEY = "slidexl_offer_ends_at";
   var DURATION_MS = 390000;
+  var root = null;
 
   function storageGet(key) {
     try {
@@ -19,6 +21,12 @@
     } catch (e) {}
   }
 
+  function storageRemove(key) {
+    try {
+      sessionStorage.removeItem(key);
+    } catch (e) {}
+  }
+
   function isUnlocked() {
     return storageGet(UNLOCKED_KEY) === "1";
   }
@@ -31,9 +39,11 @@
     }
     document.documentElement.classList.add("offer-unlocked");
     window.dispatchEvent(new CustomEvent("slidexl:offer-unlocked"));
+    syncLauncher();
   }
 
-  function showStep(root, name) {
+  function showStep(name) {
+    if (!root) return;
     root.querySelectorAll("[data-deal-step]").forEach(function (step) {
       var active = step.getAttribute("data-deal-step") === name;
       step.hidden = !active;
@@ -41,19 +51,39 @@
     });
   }
 
-  function openPopup(root) {
+  function openPopup(step) {
+    if (!root) return;
     root.hidden = false;
     root.setAttribute("aria-hidden", "false");
     document.documentElement.classList.add("deal-popup-open");
-    var first = root.querySelector("[data-deal-pick], .deal-popup__input, .deal-popup__claim");
+    storageRemove(DISMISSED_KEY);
+    showStep(step || (isUnlocked() ? "reveal" : "pick"));
+    syncLauncher();
+    var first = root.querySelector(
+      "[data-deal-step].is-active [data-deal-pick], [data-deal-step].is-active .deal-popup__input, [data-deal-step].is-active .deal-popup__claim"
+    );
     if (first) window.setTimeout(function () { first.focus(); }, 50);
   }
 
-  function closePopup(root, markDismissed) {
+  function closePopup(markDismissed) {
+    if (!root) return;
     root.hidden = true;
     root.setAttribute("aria-hidden", "true");
     document.documentElement.classList.remove("deal-popup-open");
     if (markDismissed) storageSet(DISMISSED_KEY, "1");
+    syncLauncher();
+  }
+
+  function syncLauncher() {
+    var launcher = document.querySelector("[data-deal-launcher]");
+    if (!launcher) return;
+    if (storageGet(LAUNCHER_DISMISSED_KEY) === "1" || isUnlocked()) {
+      launcher.hidden = true;
+      return;
+    }
+    // Show after popup is dismissed or closed — always available until unlocked
+    var popupOpen = root && !root.hidden;
+    launcher.hidden = !!popupOpen;
   }
 
   function submitEmail(form) {
@@ -80,7 +110,6 @@
       headers: { Accept: "application/json" },
     })
       .catch(function () {
-        /* Still unlock locally if Shopify rejects/network fails */
         return null;
       })
       .then(function () {
@@ -88,29 +117,10 @@
       });
   }
 
-  function init() {
-    var root = document.querySelector("[data-deal-popup]");
-    if (!root) return;
-
-    if (isUnlocked()) {
-      document.documentElement.classList.add("offer-unlocked");
-      return;
-    }
-
-    if (storageGet(DISMISSED_KEY) === "1") return;
-
-    var delay = Number(root.getAttribute("data-delay-ms"));
-    if (!Number.isFinite(delay) || delay < 0) delay = 1500;
-
-    window.setTimeout(function () {
-      if (isUnlocked() || storageGet(DISMISSED_KEY) === "1") return;
-      openPopup(root);
-      showStep(root, "pick");
-    }, delay);
-
+  function bindPopup() {
     root.querySelectorAll("[data-deal-close]").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        closePopup(root, true);
+        closePopup(true);
       });
     });
 
@@ -123,7 +133,7 @@
         box.classList.add("is-selected");
         box.classList.add("is-flipping");
         window.setTimeout(function () {
-          showStep(root, "email");
+          showStep("email");
           var input = root.querySelector(".deal-popup__input");
           if (input) input.focus();
         }, 420);
@@ -142,7 +152,7 @@
         submitEmail(form)
           .then(function (email) {
             unlockOffer(email);
-            showStep(root, "reveal");
+            showStep("reveal");
             var claim = root.querySelector(".deal-popup__claim");
             if (claim) claim.focus();
           })
@@ -156,9 +166,62 @@
     }
 
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && !root.hidden) {
-        closePopup(root, true);
+      if (event.key === "Escape" && root && !root.hidden) {
+        closePopup(true);
       }
+    });
+  }
+
+  function bindLauncher() {
+    var launcher = document.querySelector("[data-deal-launcher]");
+    if (!launcher) return;
+
+    launcher.addEventListener("click", function (event) {
+      if (event.target && event.target.closest("[data-deal-launcher-dismiss]")) {
+        event.preventDefault();
+        event.stopPropagation();
+        storageSet(LAUNCHER_DISMISSED_KEY, "1");
+        launcher.hidden = true;
+        return;
+      }
+      openPopup(isUnlocked() ? "reveal" : "pick");
+    });
+  }
+
+  function init() {
+    root = document.querySelector("[data-deal-popup]");
+    if (!root) {
+      bindLauncher();
+      syncLauncher();
+      return;
+    }
+
+    bindPopup();
+    bindLauncher();
+
+    if (isUnlocked()) {
+      document.documentElement.classList.add("offer-unlocked");
+      syncLauncher();
+      return;
+    }
+
+    var delay = Number(root.getAttribute("data-delay-ms"));
+    if (!Number.isFinite(delay) || delay < 0) delay = 1500;
+
+    if (storageGet(DISMISSED_KEY) !== "1") {
+      window.setTimeout(function () {
+        if (isUnlocked() || storageGet(DISMISSED_KEY) === "1") {
+          syncLauncher();
+          return;
+        }
+        openPopup("pick");
+      }, delay);
+    } else {
+      syncLauncher();
+    }
+
+    window.addEventListener("slidexl:open-deal-popup", function () {
+      openPopup(isUnlocked() ? "reveal" : "pick");
     });
   }
 
