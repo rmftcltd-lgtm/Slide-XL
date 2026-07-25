@@ -11,21 +11,6 @@
           loading="eager"
         >
       {% endif %}
-      {% if product.images.size > 1 %}
-        <div class="thumbs">
-          {% for image in product.images %}
-            {% unless forloop.first %}
-              <img
-                src="{{ image | image_url: width: 400 }}"
-                alt="{{ image.alt | default: product.title | escape }}"
-                width="400"
-                height="300"
-                loading="lazy"
-              >
-            {% endunless %}
-          {% endfor %}
-        </div>
-      {% endif %}
     </div>
     <div>
       <p class="eyebrow eyebrow--purple">USA Pre-Launch · Limited offer</p>
