@@ -1,0 +1,31 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    },
+    "discount_popup": {
+      "type": "discount-popup",
+      "settings": {
+        "product": "10035954516215",
+        "delay_ms": 1500,
+        "pick_heading": "Pick one to reveal your discount",
+        "email_eyebrow": "Nice pick",
+        "email_heading_top": "You've got a",
+        "email_heading_accent": "Special discount",
+        "email_placeholder": "Your email address",
+        "email_button": "Continue",
+        "email_fine_print": "Enter your email to unlock the Pre-Launch Bundle deal. Unsubscribe anytime.",
+        "reveal_eyebrow": "Unlocked",
+        "reveal_heading": "Your Pre-Launch Bundle deal",
+        "reveal_product_name": "Mop + 4 refills + collapsible bucket",
+        "reveal_shipping": "Including shipping right across the USA",
+        "reveal_cta": "Grab the Bundle",
+        "reveal_dismiss": "Keep browsing"
+      }
+    }
+  },
+  "order": ["footer", "discount_popup"]
+}

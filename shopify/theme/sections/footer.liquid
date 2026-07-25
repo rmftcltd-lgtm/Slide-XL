@@ -1,0 +1,37 @@
+<footer class="site-footer">
+  <div class="shell site-footer__grid">
+    <div>
+      <p class="logo__text logo__text--light">Slide <span>XL</span></p>
+      <p class="muted">
+        Aussie-invented. USA-bound. Built for pet hair, timber, tile, and the kind of mess Tamanui leaves behind.
+        Invented by Mike the Mop King.
+      </p>
+    </div>
+    <div>
+      <h3>Shop</h3>
+      <ul>
+        <li><a href="{{ routes.root_url }}">Home</a></li>
+        <li><a href="{{ routes.root_url }}#bundle">Pre-Launch Bundle</a></li>
+        <li><a href="{{ routes.cart_url }}">Cart</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Markets</h3>
+      <ul>
+        <li>🇺🇸 United States — Live</li>
+        <li>🇦🇺 Australia — Soon</li>
+        <li>🇨🇦 Canada — Soon</li>
+        <li>🇬🇧 United Kingdom — Soon</li>
+        <li>🇳🇿 New Zealand — Soon</li>
+      </ul>
+    </div>
+  </div>
+  <p class="site-footer__copy">© {{ 'now' | date: '%Y' }} {{ shop.name }} · Crikey, it's clean · Shipping currently available across the United States</p>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": []
+}
+{% endschema %}

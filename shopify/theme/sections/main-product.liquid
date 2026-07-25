@@ -1,0 +1,31 @@
+{% comment %}
+  Product page removed — send visitors straight to checkout with the bundle.
+{% endcomment %}
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% if current_variant != blank and current_variant.available %}
+  {% assign checkout_path = '/cart/add?id=' | append: current_variant.id | append: '&quantity=1&return_to=/checkout' %}
+{% else %}
+  {% assign checkout_path = routes.root_url | append: '#bundle' %}
+{% endif %}
+
+<section class="band band--wash product-page">
+  <div class="shell" style="text-align:center;padding:4rem 1rem;">
+    <p class="eyebrow eyebrow--purple">Taking you to checkout…</p>
+    <h1>{{ product.title }}</h1>
+    <p class="lede">One moment while we add the Pre-Launch Bundle to your order.</p>
+    <p style="margin-top:1.5rem;">
+      <a class="btn btn--primary" href="{{ checkout_path }}">Continue to checkout</a>
+    </p>
+  </div>
+</section>
+
+<script>
+  window.location.replace({{ checkout_path | json }});
+</script>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": []
+}
+{% endschema %}

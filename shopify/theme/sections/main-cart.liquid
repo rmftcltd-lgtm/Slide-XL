@@ -1,0 +1,47 @@
+<section class="band band--wash">
+  <div class="shell">
+    <h1>{{ 'cart.general.title' | t }}</h1>
+    {% if cart.item_count == 0 %}
+      <div class="empty-card">
+        <p>{{ 'cart.general.empty' | t }}</p>
+        {% assign bundle = all_products['pre-launch-bundle'] %}
+        {% render 'checkout-cta', product: bundle, label: 'Shop the Pre-Launch Bundle', class: 'btn btn--primary' %}
+      </div>
+    {% else %}
+      <form action="{{ routes.cart_url }}" method="post" class="cart-layout">
+        <ul class="cart-lines">
+          {% for item in cart.items %}
+            <li class="cart-line">
+              {% if item.image %}
+                {{ item.image | image_url: width: 240 | image_tag: loading: 'lazy' }}
+              {% endif %}
+              <div>
+                <h2>{{ item.product.title }}</h2>
+                <p class="muted">{{ item.final_line_price | money }}</p>
+                <label>
+                  Qty
+                  <input type="number" name="updates[]" value="{{ item.quantity }}" min="0">
+                </label>
+                <a href="{{ item.url_to_remove }}">Remove</a>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+        <aside class="cart-summary">
+          <h2>Summary</h2>
+          <p><span>{{ 'cart.general.subtotal' | t }}</span> <strong>{{ cart.total_price | money }}</strong></p>
+          <p class="shipping-note">{{ 'cart.general.shipping_note' | t }}</p>
+          <button class="btn btn--primary" type="submit" name="update">{{ 'cart.general.update' | t }}</button>
+          <button class="btn btn--primary" type="submit" name="checkout">{{ 'cart.general.checkout' | t }}</button>
+        </aside>
+      </form>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": []
+}
+{% endschema %}

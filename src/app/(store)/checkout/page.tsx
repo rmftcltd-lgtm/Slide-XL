@@ -37,7 +37,7 @@ export default function CheckoutPage() {
     return (
       <div className="mx-auto max-w-content px-4 py-20 text-center">
         <p className="text-ink-muted">Nothing to check out yet.</p>
-        <Link href="/product/pre-launch-bundle" className="mt-4 inline-block text-purple font-semibold">
+        <Link href="/#bundle" className="mt-4 inline-block text-purple font-semibold">
           Shop the bundle
         </Link>
       </div>

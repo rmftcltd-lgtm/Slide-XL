@@ -1,0 +1,230 @@
+{% assign p = section.settings.product %}
+{% if p == blank %}
+  {% assign p = all_products['pre-launch-bundle'] %}
+{% endif %}
+{% if p != blank %}
+  {% assign deal_price = p.price | money_with_currency %}
+  {% if p.compare_at_price > p.price %}
+    {% assign deal_compare = p.compare_at_price | money_with_currency %}
+  {% endif %}
+{% else %}
+  {% assign deal_price = '$149.95 USD' %}
+  {% assign deal_compare = '$219.70 USD' %}
+{% endif %}
+
+<div
+  class="deal-popup"
+  id="DealPopup"
+  data-deal-popup
+  data-delay-ms="{{ section.settings.delay_ms }}"
+  hidden
+  aria-hidden="true"
+>
+  <div class="deal-popup__backdrop" data-deal-close tabindex="-1"></div>
+  <div
+    class="deal-popup__dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="DealPopupTitle"
+  >
+    <button class="deal-popup__close" type="button" data-deal-close aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+
+    <div class="deal-popup__brand">
+      <img
+        src="{{ 'slide-xl-logo.png' | asset_url }}"
+        alt="Slide XL"
+        width="64"
+        height="64"
+        loading="eager"
+      >
+      <span>Slide <em>XL</em></span>
+    </div>
+
+    <div class="deal-popup__step is-active" data-deal-step="pick">
+      <h2 class="deal-popup__title" id="DealPopupTitle">{{ section.settings.pick_heading }}</h2>
+      <div class="deal-popup__boxes" role="group" aria-label="Choose a box">
+        <button class="deal-popup__box" type="button" data-deal-pick aria-label="Mystery box 1">?</button>
+        <button class="deal-popup__box" type="button" data-deal-pick aria-label="Mystery box 2">?</button>
+        <button class="deal-popup__box" type="button" data-deal-pick aria-label="Mystery box 3">?</button>
+      </div>
+      <div class="deal-popup__media">
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'eager', widths: '400,700,900', sizes: '100vw' }}
+        {% else %}
+          <img
+            src="{{ 'bundle-flatlay.png' | asset_url }}"
+            alt="Slide XL Pre-Launch Bundle"
+            width="900"
+            height="600"
+            loading="eager"
+          >
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="deal-popup__step" data-deal-step="email" hidden>
+      <p class="deal-popup__eyebrow">{{ section.settings.email_eyebrow }}</p>
+      <h2 class="deal-popup__title deal-popup__title--split">
+        <span>{{ section.settings.email_heading_top }}</span>
+        <strong>{{ section.settings.email_heading_accent }}</strong>
+      </h2>
+      {% form 'customer', class: 'deal-popup__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter, bundle-popup, pre-launch">
+        <input type="hidden" name="contact[accepts_marketing]" value="true">
+        <label class="visually-hidden" for="DealPopupEmail">Email address</label>
+        <input
+          id="DealPopupEmail"
+          class="deal-popup__input"
+          type="email"
+          name="contact[email]"
+          autocomplete="email"
+          inputmode="email"
+          placeholder="{{ section.settings.email_placeholder }}"
+          required
+        >
+        <button class="btn btn--primary deal-popup__submit" type="submit">
+          {{ section.settings.email_button }}
+        </button>
+        <p class="deal-popup__fine">{{ section.settings.email_fine_print }}</p>
+        <p class="deal-popup__error" data-deal-error hidden></p>
+      {% endform %}
+      <div class="deal-popup__media deal-popup__media--short">
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400,700,900', sizes: '100vw' }}
+        {% else %}
+          <img
+            src="{{ 'bundle-flatlay.png' | asset_url }}"
+            alt=""
+            width="900"
+            height="600"
+            loading="lazy"
+          >
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="deal-popup__step" data-deal-step="reveal" hidden>
+      <p class="deal-popup__eyebrow">{{ section.settings.reveal_eyebrow }}</p>
+      <h2 class="deal-popup__title">{{ section.settings.reveal_heading }}</h2>
+      <p class="deal-popup__deal-name">{{ section.settings.reveal_product_name }}</p>
+      <div class="deal-popup__price">
+        <span class="deal-popup__price-now">{{ deal_price }}</span>
+        {% if deal_compare != blank %}
+          <span class="deal-popup__price-was">{{ deal_compare }} RRP</span>
+        {% endif %}
+      </div>
+      <p class="deal-popup__shipping">{{ section.settings.reveal_shipping }}</p>
+      <div class="deal-popup__countdown-slot">
+        {% render 'offer-countdown', theme: 'ink' %}
+      </div>
+      <div class="deal-popup__cta">
+        {% capture reveal_label %}{{ section.settings.reveal_cta }} — {{ deal_price }}{% endcapture %}
+        {% render 'checkout-cta', product: p, label: reveal_label, class: 'btn btn--primary deal-popup__claim' %}
+      </div>
+      <button class="deal-popup__later" type="button" data-deal-close>
+        {{ section.settings.reveal_dismiss }}
+      </button>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Discount popup",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Bundle product" },
+    { "type": "image_picker", "id": "image", "label": "Popup image" },
+    {
+      "type": "range",
+      "id": "delay_ms",
+      "min": 0,
+      "max": 8000,
+      "step": 500,
+      "unit": "ms",
+      "label": "Delay before showing",
+      "default": 1500
+    },
+    {
+      "type": "text",
+      "id": "pick_heading",
+      "label": "Pick step heading",
+      "default": "Pick one to reveal your discount"
+    },
+    {
+      "type": "text",
+      "id": "email_eyebrow",
+      "label": "Email eyebrow",
+      "default": "Nice pick"
+    },
+    {
+      "type": "text",
+      "id": "email_heading_top",
+      "label": "Email heading top",
+      "default": "You've got a"
+    },
+    {
+      "type": "text",
+      "id": "email_heading_accent",
+      "label": "Email heading accent",
+      "default": "Special discount"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "Your email address"
+    },
+    {
+      "type": "text",
+      "id": "email_button",
+      "label": "Email button",
+      "default": "Continue"
+    },
+    {
+      "type": "text",
+      "id": "email_fine_print",
+      "label": "Email fine print",
+      "default": "Enter your email to unlock the Pre-Launch Bundle deal. Unsubscribe anytime."
+    },
+    {
+      "type": "text",
+      "id": "reveal_eyebrow",
+      "label": "Reveal eyebrow",
+      "default": "Unlocked"
+    },
+    {
+      "type": "text",
+      "id": "reveal_heading",
+      "label": "Reveal heading",
+      "default": "Your Pre-Launch Bundle deal"
+    },
+    {
+      "type": "text",
+      "id": "reveal_product_name",
+      "label": "Reveal product name",
+      "default": "Mop + 4 refills + collapsible bucket"
+    },
+    {
+      "type": "text",
+      "id": "reveal_shipping",
+      "label": "Reveal shipping note",
+      "default": "Including shipping right across the USA"
+    },
+    {
+      "type": "text",
+      "id": "reveal_cta",
+      "label": "Reveal CTA",
+      "default": "Grab the Bundle"
+    },
+    {
+      "type": "text",
+      "id": "reveal_dismiss",
+      "label": "Reveal dismiss",
+      "default": "Keep browsing"
+    }
+  ],
+  "presets": [{ "name": "Discount popup" }]
+}
+{% endschema %}

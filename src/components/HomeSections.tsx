@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { AddToCartButton } from "./AddToCartButton";
 import { BundlePricing } from "./BundlePricing";
+import { OfferCountdown } from "./OfferCountdown";
 import { getProductByHandle } from "@/lib/products";
 
 export function Hero() {
@@ -15,32 +15,37 @@ export function Hero() {
           <p className="animate-slide-in font-display text-sm font-semibold uppercase tracking-[0.2em] text-khaki">
             Mike the Mop King · USA Pre-Launch
           </p>
-          <h1 className="animate-slide-in-delay-1 mt-4 font-display text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl">
-            <span className="block text-white">Slide XL</span>
-            <span className="mt-2 block text-3xl font-bold text-khaki sm:text-4xl">
-              Pet hair? She&apos;ll be right.
+          <h1 className="animate-slide-in-delay-1 mt-4 font-display font-extrabold leading-[0.95] tracking-tight">
+            <span className="block text-[clamp(2.6rem,7vw,4rem)] text-white">
+              Slide XL
+            </span>
+            <span className="mt-3 block text-[clamp(1.55rem,4.2vw,2.35rem)] uppercase tracking-tight text-white">
+              A full clean for{" "}
+              <span
+                className="inline-block text-transparent"
+                style={{ WebkitTextStroke: "1.5px #b8956c" }}
+              >
+                pet hair floors
+              </span>
             </span>
           </h1>
           <p className="animate-slide-in-delay-2 mt-5 max-w-md text-lg leading-relaxed text-white/85">
             Sweep, mop, and dry in one go. Hair grabs on — then falls off when
-            the head hits water. Built bigger, longer, and purple for American
-            floors and Aussie-sized mess.
+            the head hits water.
           </p>
-          <div className="animate-slide-in-delay-2 mt-8 flex flex-wrap items-center gap-4">
+          <div className="animate-slide-in-delay-2">
+            <OfferCountdown theme="hero" />
+          </div>
+          <div className="animate-slide-in-delay-2 mt-6 flex flex-wrap items-center gap-4">
             <AddToCartButton
               productId={product.id}
-              label={`Grab the Bundle — $${product.price.amount}`}
-              redirectToCart
+              label="Shop now →"
+              redirectToCheckout
+              className="!bg-white !text-ink hover:!bg-khaki"
             />
-            <Link
-              href="/product/pre-launch-bundle"
-              className="inline-flex items-center justify-center rounded-md border border-white/40 bg-white/10 px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-white backdrop-blur transition hover:bg-white/20"
-            >
-              See what&apos;s in the box
-            </Link>
           </div>
           <p className="mt-4 text-sm text-white/70">
-            Free shipping across the USA · Was ${product.compareAtPrice.amount.toFixed(2)} RRP
+            Pre-Launch Bundle · Free shipping across the USA
           </p>
         </div>
       </div>
@@ -80,7 +85,7 @@ export function HowItWorks() {
           One tool. Sweep, mop, dry — hair gone.
         </h2>
         <p className="mt-4 max-w-xl text-ink-muted">
-          Same hard-won Aussie thinking that started it all — rebuilt as V4.0
+          Same hard-won Aussie thinking that started it all — rebuilt
           with a larger head, longer pole, and a wringer that actually keeps up
           with shedding season.
         </p>
@@ -106,6 +111,102 @@ export function HowItWorks() {
             className="h-auto w-full object-cover"
           />
         </div>
+      </div>
+    </section>
+  );
+}
+
+export function NanoSlideTechnology() {
+  const features = [
+    {
+      title: "Advanced poly-side drainage ribs",
+      body: "Deep horizontal ribs increase surface area for superior drainage — water and fine debris move through the grooves instead of smearing across the floor.",
+    },
+    {
+      title: "Precision micro-grip surface",
+      body: "A non-slip micro-grip texture between the ribs catches pet hair, dander, and grit on contact — wet or dry.",
+    },
+    {
+      title: "Ultra-durable reinforced edge",
+      body: "Reinforced edges stand up to skirting boards, doorways, and daily abuse without fraying like cloth pads.",
+    },
+    {
+      title: "Fade-resistant hygienic colorant",
+      body: "The signature purple is fade-resistant and easy to read as clean — you can see when the head needs a rinse.",
+    },
+    {
+      title: "Fast-drying core",
+      body: "A non-absorbent, fast-drying core helps the head rinse clean and dry ready for the next pass — less smell, less slime.",
+    },
+  ];
+
+  return (
+    <section id="nano-slide" className="bg-aussie-wash py-20 sm:py-28">
+      <div className="mx-auto max-w-content px-4 sm:px-6">
+        <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-purple">
+          Nano Slide Technology ®
+        </p>
+        <h2 className="mt-3 max-w-2xl font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+          The mop head is the technology.
+        </h2>
+        <p className="mt-4 max-w-2xl text-ink-muted leading-relaxed">
+          Nano Slide Technology ® is built into Slide XL’s special PVA mop
+          head — a ridged, purple cleaning surface engineered to grab pet
+          hair dry, wash floors wet, and release the mess when it hits water.
+        </p>
+
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
+          <figure className="m-0 overflow-hidden rounded-2xl">
+            <Image
+              src="/images/nano-slide-mop-head-tile.png"
+              alt="Purple Nano Slide PVA mop head with water droplets on white tile"
+              width={1600}
+              height={900}
+              className="h-auto w-full object-cover"
+            />
+            <figcaption className="mt-2 text-sm text-ink-muted">
+              Special PVA head on tile — drainage ribs hold and release water
+              cleanly.
+            </figcaption>
+          </figure>
+          <figure className="m-0 overflow-hidden rounded-2xl">
+            <Image
+              src="/images/nano-slide-mop-head-studio.png"
+              alt="Purple Nano Slide PVA mop head with water droplets on black studio surface"
+              width={1600}
+              height={900}
+              className="h-auto w-full object-cover"
+            />
+            <figcaption className="mt-2 text-sm text-ink-muted">
+              Close-up of the ridged PVA surface — the heart of Nano Slide
+              Technology ®.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div className="mt-12 max-w-2xl">
+          <h3 className="font-display text-2xl font-bold text-ink">
+            Special PVA, built for hair and hard floors
+          </h3>
+          <p className="mt-3 text-ink-muted leading-relaxed">
+            Unlike ordinary foam or microfibre, Slide XL’s purple PVA head
+            uses Nano Slide Technology ® — a precision-ridged polymer surface
+            that traps hair and dirt in the grooves, then lets go when rinsed.
+            That is why one head can sweep, mop, and dry without turning into
+            a sticky hair magnet.
+          </p>
+        </div>
+
+        <ul className="mt-10 grid gap-6 sm:grid-cols-2">
+          {features.map((f) => (
+            <li key={f.title}>
+              <h4 className="font-display text-lg font-bold text-ink">
+                {f.title}
+              </h4>
+              <p className="mt-2 text-ink-muted leading-relaxed">{f.body}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
@@ -168,13 +269,13 @@ export function MeetMike() {
         <div className="relative">
           <Image
             src="/images/mike-tamanui-coast.png"
-            alt="Mike the Mop King with Tamanui on the coast, holding Slide XL"
-            width={1536}
+            alt="Mike the Mop King in Los Angeles with Slide XL"
+            width={1051}
             height={1024}
             className="h-auto w-full rounded-2xl object-cover"
           />
           <p className="mt-3 text-sm text-white/55">
-            Mike the Mop King & Tamanui — the faces of the Slide XL campaign.
+            Mike the Mop King — Los Angeles.
           </p>
         </div>
         <div>
@@ -182,7 +283,7 @@ export function MeetMike() {
             The Aussie behind the mop
           </p>
           <h2 className="mt-3 font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            Meet Mike the Mop King — and Tamanui.
+            Meet Mike the Mop King.
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-white/80">
             Michael Clegg invents like he cleans: no nonsense, plenty of heart,
@@ -191,7 +292,7 @@ export function MeetMike() {
             timber.
           </p>
           <p className="mt-4 leading-relaxed text-white/70">
-            Slide XL is his V4.0: larger mop head, longer reach, purple-and-white
+            Slide XL has a larger mop head, longer reach, purple-and-white
             finish, and the wrinkles of earlier versions ironed out. Tamanui
             isn&apos;t a prop — he&apos;s the product tester who keeps Mike honest.
           </p>
@@ -232,14 +333,9 @@ export function BundleOffer() {
           <div className="mt-8">
             <BundlePricing product={product} />
           </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <AddToCartButton productId={product.id} redirectToCart />
-            <Link
-              href="/product/pre-launch-bundle"
-              className="inline-flex items-center justify-center rounded-md border border-purple/30 bg-white px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-purple transition hover:border-purple"
-            >
-              Full details
-            </Link>
+          <OfferCountdown theme="ink" />
+          <div className="mt-6 flex flex-wrap gap-3">
+            <AddToCartButton productId={product.id} redirectToCheckout />
           </div>
         </div>
       </div>
@@ -257,12 +353,12 @@ export function BeforeAfter() {
               Tamanui-approved
             </p>
             <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              Muddy noses. Shed hair. Spotless after.
+              Muddy paws. Shed hair. Spotless after.
             </h2>
             <p className="mt-4 text-ink-muted leading-relaxed">
-              The campaign runs on real mess — not studio glitter. If your dog
-              treats the hallway like a racetrack, you already know why Slide XL
-              exists.
+              Tamanui puts Slide XL through real mess — muddy paws, shed hair,
+              hallway chaos. If your dog treats the floor like a racetrack, you
+              already know why this mop exists.
             </p>
           </div>
           <Image
@@ -294,7 +390,7 @@ export function Faq() {
     },
     {
       q: "Is this related to older Aussie mops?",
-      a: "Slide XL is Mike's V4.0 — larger head, longer mop, purple & white, and a long list of earlier lessons baked in. It's a new product for a new market.",
+      a: "Slide XL is Mike's latest mop — larger head, longer mop, purple & white, and a long list of earlier lessons baked in. It's a new product for a new market.",
     },
   ];
 

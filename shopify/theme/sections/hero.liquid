@@ -1,0 +1,80 @@
+<section class="hero">
+  <div class="hero__media">
+    {% if section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', class: 'hero__img', widths: '800,1200,1600,2000', sizes: '100vw' }}
+    {% else %}
+      <img
+        class="hero__img"
+        src="{{ 'mop-action-wood.png' | asset_url }}"
+        alt="Slide XL mop cleaning pet hair on timber floors"
+        width="1536"
+        height="1024"
+        loading="eager"
+      >
+    {% endif %}
+  </div>
+  <div class="hero__overlay"></div>
+  <div class="shell hero__content">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1>
+      <span class="hero__brand">{{ section.settings.brand }}</span>
+      <span class="hero__headline">
+        {{ section.settings.headline_lead }}
+        {% if section.settings.headline_outline != blank %}
+          <span class="hero__headline-outline">{{ section.settings.headline_outline }}</span>
+        {% endif %}
+      </span>
+    </h1>
+    <p class="hero__sub">{{ section.settings.subcopy }}</p>
+    {% render 'offer-countdown', theme: 'hero' %}
+    <div class="hero__cta">
+      {% assign p = section.settings.product %}
+      {% if p == blank %}
+        {% assign p = all_products['pre-launch-bundle'] %}
+      {% endif %}
+      {% capture cta_label %}{{ section.settings.cta_label }} →{% endcapture %}
+      {% render 'checkout-cta', product: p, label: cta_label, class: 'btn btn--shop' %}
+    </div>
+    {% if section.settings.fine_print != blank %}
+      <p class="hero__fine">{{ section.settings.fine_print }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "product", "id": "product", "label": "Featured product" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Mike the Mop King · USA Pre-Launch" },
+    { "type": "text", "id": "brand", "label": "Brand", "default": "Slide XL" },
+    {
+      "type": "text",
+      "id": "headline_lead",
+      "label": "Headline (solid)",
+      "default": "A full clean for"
+    },
+    {
+      "type": "text",
+      "id": "headline_outline",
+      "label": "Headline (outline emphasis)",
+      "default": "pet hair floors"
+    },
+    {
+      "type": "textarea",
+      "id": "subcopy",
+      "label": "Supporting copy",
+      "default": "Sweep, mop, and dry in one go. Hair grabs on — then falls off when the head hits water."
+    },
+    { "type": "text", "id": "cta_label", "label": "Primary CTA", "default": "Shop now" },
+    {
+      "type": "text",
+      "id": "fine_print",
+      "label": "Fine print",
+      "default": "Pre-Launch Bundle · Free shipping across the USA"
+    }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}
