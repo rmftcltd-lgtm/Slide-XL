@@ -1,6 +1,5 @@
 (function () {
   var STORAGE_KEY = "slidexl_offer_ends_at";
-  var UNLOCKED_KEY = "slidexl_offer_unlocked";
   var DEFAULT_MS = 390000; // 6.5 minutes
   var tickTimer = null;
   var lastSpokenMinute = null;
@@ -21,10 +20,6 @@
     try {
       sessionStorage.setItem(key, value);
     } catch (e) {}
-  }
-
-  function isUnlocked() {
-    return storageGet(UNLOCKED_KEY) === "1";
   }
 
   function readDuration(nodes) {
@@ -84,25 +79,12 @@
     lastSpokenMinute = mins;
   }
 
-  function hideAll(nodes) {
-    nodes.forEach(function (node) {
-      node.hidden = true;
-    });
-  }
-
   function start() {
     var nodes = Array.prototype.slice.call(
       document.querySelectorAll("[data-offer-countdown]")
     );
     if (!nodes.length) return;
 
-    if (!isUnlocked()) {
-      hideAll(nodes);
-      document.documentElement.classList.remove("offer-unlocked");
-      return;
-    }
-
-    document.documentElement.classList.add("offer-unlocked");
     var durationMs = readDuration(nodes);
     var endsAt = getEndsAt(durationMs);
 
@@ -115,6 +97,7 @@
     tickTimer = window.setInterval(tick, 250);
   }
 
+  // Re-scan when popup reveal mounts new countdown nodes
   window.addEventListener("slidexl:offer-unlocked", start);
 
   if (document.readyState === "loading") {

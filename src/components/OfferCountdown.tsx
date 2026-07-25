@@ -1,12 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  isOfferUnlocked,
-  OFFER_DURATION_MS,
-  OFFER_ENDS_KEY,
-  OFFER_UNLOCKED_EVENT,
-} from "@/lib/offer";
+import { OFFER_DURATION_MS, OFFER_ENDS_KEY } from "@/lib/offer";
 
 type Theme = "hero" | "ink";
 
@@ -30,22 +25,12 @@ function readEndsAt(): number {
 }
 
 export function OfferCountdown({ theme = "ink" }: { theme?: Theme }) {
-  const [unlocked, setUnlocked] = useState(false);
   const [remainingMs, setRemainingMs] = useState<number | null>(null);
   const [srText, setSrText] = useState(
     "Special bundle price reserved for 6 minutes and 30 seconds.",
   );
 
   useEffect(() => {
-    const syncUnlocked = () => setUnlocked(isOfferUnlocked());
-    syncUnlocked();
-    window.addEventListener(OFFER_UNLOCKED_EVENT, syncUnlocked);
-    return () => window.removeEventListener(OFFER_UNLOCKED_EVENT, syncUnlocked);
-  }, []);
-
-  useEffect(() => {
-    if (!unlocked) return;
-
     const endsAt = readEndsAt();
     let lastSpokenMinute: number | null = null;
 
@@ -69,9 +54,7 @@ export function OfferCountdown({ theme = "ink" }: { theme?: Theme }) {
     tick();
     const id = window.setInterval(tick, 250);
     return () => window.clearInterval(id);
-  }, [unlocked]);
-
-  if (!unlocked) return null;
+  }, []);
 
   const totalSec =
     remainingMs === null
@@ -93,7 +76,7 @@ export function OfferCountdown({ theme = "ink" }: { theme?: Theme }) {
   const hintClass = theme === "hero" ? "text-white/75" : "text-ink-muted";
 
   return (
-    <div className="mt-5 max-w-sm sm:mt-6">
+    <div className="mt-5 max-w-sm sm:mt-6" data-offer-countdown>
       <p
         className={`font-display text-[0.72rem] font-semibold uppercase tracking-[0.14em] ${labelClass}`}
       >
