@@ -1,0 +1,90 @@
+<section class="band" id="for-who">
+  <div class="shell">
+    <p class="eyebrow eyebrow--ocean">{{ section.settings.eyebrow }}</p>
+    <h2>{{ section.settings.heading }}</h2>
+    <div class="audience">
+      {% for block in section.blocks %}
+        <article {{ block.shopify_attributes }}>
+          <span class="chip chip--{{ block.settings.tone }}">{{ block.settings.title }}</span>
+          <p>{{ block.settings.body }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Who it's for",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "default": "Who it's for", "label": "Eyebrow" },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Built for pet parents first — brilliant for anyone with floors.",
+      "label": "Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "audience",
+      "name": "Audience",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Pet owners" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Fur, muddy paws, nose prints — Tamanui-level chaos." },
+        {
+          "type": "select",
+          "id": "tone",
+          "label": "Tone",
+          "options": [
+            { "value": "purple", "label": "Purple" },
+            { "value": "timber", "label": "Timber" },
+            { "value": "ocean", "label": "Ocean" },
+            { "value": "khaki", "label": "Khaki" }
+          ],
+          "default": "purple"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Who it's for",
+      "blocks": [
+        {
+          "type": "audience",
+          "settings": {
+            "title": "Pet owners",
+            "body": "Fur, muddy paws, nose prints — Tamanui-level chaos. Hair releases in water so you're not peeling it off by hand.",
+            "tone": "purple"
+          }
+        },
+        {
+          "type": "audience",
+          "settings": {
+            "title": "Timber & tile homes",
+            "body": "Gentle enough for sealed hardwood and tough enough for grout lines.",
+            "tone": "timber"
+          }
+        },
+        {
+          "type": "audience",
+          "settings": {
+            "title": "Barbers & salons",
+            "body": "Hair on the floor all day. Slide XL picks it up wet or dry and rinses clean between clients.",
+            "tone": "ocean"
+          }
+        },
+        {
+          "type": "audience",
+          "settings": {
+            "title": "Busy households",
+            "body": "Kids, guests, entryways — skip the vacuum-then-mop dance.",
+            "tone": "khaki"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

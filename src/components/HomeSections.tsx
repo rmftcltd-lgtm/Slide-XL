@@ -32,12 +32,6 @@ export function Hero() {
               label={`Grab the Bundle — $${product.price.amount}`}
               redirectToCart
             />
-            <Link
-              href="/product/pre-launch-bundle"
-              className="inline-flex items-center justify-center rounded-md border border-white/40 bg-white/10 px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-white backdrop-blur transition hover:bg-white/20"
-            >
-              See what&apos;s in the box
-            </Link>
           </div>
           <p className="mt-4 text-sm text-white/70">
             Free shipping across the USA · Was ${product.compareAtPrice.amount.toFixed(2)} RRP
@@ -80,7 +74,7 @@ export function HowItWorks() {
           One tool. Sweep, mop, dry — hair gone.
         </h2>
         <p className="mt-4 max-w-xl text-ink-muted">
-          Same hard-won Aussie thinking that started it all — rebuilt as V4.0
+          Same hard-won Aussie thinking that started it all — rebuilt
           with a larger head, longer pole, and a wringer that actually keeps up
           with shedding season.
         </p>
@@ -168,13 +162,13 @@ export function MeetMike() {
         <div className="relative">
           <Image
             src="/images/mike-tamanui-coast.png"
-            alt="Mike the Mop King with Tamanui on the coast, holding Slide XL"
-            width={1536}
+            alt="Mike the Mop King in Los Angeles with Slide XL"
+            width={1051}
             height={1024}
             className="h-auto w-full rounded-2xl object-cover"
           />
           <p className="mt-3 text-sm text-white/55">
-            Mike the Mop King & Tamanui — the faces of the Slide XL campaign.
+            Mike the Mop King — Los Angeles.
           </p>
         </div>
         <div>
@@ -182,7 +176,7 @@ export function MeetMike() {
             The Aussie behind the mop
           </p>
           <h2 className="mt-3 font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            Meet Mike the Mop King — and Tamanui.
+            Meet Mike the Mop King.
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-white/80">
             Michael Clegg invents like he cleans: no nonsense, plenty of heart,
@@ -191,7 +185,7 @@ export function MeetMike() {
             timber.
           </p>
           <p className="mt-4 leading-relaxed text-white/70">
-            Slide XL is his V4.0: larger mop head, longer reach, purple-and-white
+            Slide XL has a larger mop head, longer reach, purple-and-white
             finish, and the wrinkles of earlier versions ironed out. Tamanui
             isn&apos;t a prop — he&apos;s the product tester who keeps Mike honest.
           </p>
@@ -257,12 +251,12 @@ export function BeforeAfter() {
               Tamanui-approved
             </p>
             <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              Muddy noses. Shed hair. Spotless after.
+              Muddy paws. Shed hair. Spotless after.
             </h2>
             <p className="mt-4 text-ink-muted leading-relaxed">
-              The campaign runs on real mess — not studio glitter. If your dog
-              treats the hallway like a racetrack, you already know why Slide XL
-              exists.
+              Tamanui puts Slide XL through real mess — muddy paws, shed hair,
+              hallway chaos. If your dog treats the floor like a racetrack, you
+              already know why this mop exists.
             </p>
           </div>
           <Image
@@ -294,7 +288,7 @@ export function Faq() {
     },
     {
       q: "Is this related to older Aussie mops?",
-      a: "Slide XL is Mike's V4.0 — larger head, longer mop, purple & white, and a long list of earlier lessons baked in. It's a new product for a new market.",
+      a: "Slide XL is Mike's latest mop — larger head, longer mop, purple & white, and a long list of earlier lessons baked in. It's a new product for a new market.",
     },
   ];
 
