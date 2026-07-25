@@ -1,0 +1,28 @@
+<section class="band band--wash">
+  <div class="shell shell--narrow">
+    <h1>Search</h1>
+    <form action="{{ routes.search_url }}" method="get" role="search" style="margin:1.5rem 0">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search Slide XL" style="width:100%;padding:0.9rem 1rem;border:1px solid rgba(107,45,145,0.2);border-radius:0.4rem">
+    </form>
+    {% if search.performed %}
+      {% if search.results_count == 0 %}
+        <p class="muted">No results for “{{ search.terms | escape }}”.</p>
+      {% else %}
+        <ul class="cart-lines">
+          {% for result in search.results %}
+            <li class="cart-line">
+              <a href="{{ result.url }}"><strong>{{ result.title }}</strong></a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search",
+  "settings": []
+}
+{% endschema %}

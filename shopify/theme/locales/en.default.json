@@ -1,0 +1,28 @@
+{
+  "general": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "This page went walkabout. Head back home."
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add Pre-Launch Bundle",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Cart's emptier than a floor after Slide XL.",
+      "checkout": "Checkout",
+      "update": "Update",
+      "subtotal": "Subtotal",
+      "shipping_note": "Shipping included across the USA"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content"
+  }
+}

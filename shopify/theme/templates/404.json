@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "faq",
+      "settings": {
+        "heading": "Page not found"
+      },
+      "blocks": {
+        "f1": {
+          "type": "item",
+          "settings": {
+            "question": "Where did this page go?",
+            "answer": "This page went walkabout. Head back to the Slide XL home page and grab the Pre-Launch Bundle."
+          }
+        }
+      },
+      "block_order": ["f1"]
+    }
+  },
+  "order": ["main"]
+}

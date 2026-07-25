@@ -1,0 +1,124 @@
+<section class="band band--soft" id="bundle">
+  <div class="shell split">
+    <div>
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'rounded shadow', loading: 'lazy', widths: '600,900,1200', sizes: '(min-width: 900px) 50vw, 100vw' }}
+      {% else %}
+        <img
+          class="rounded shadow"
+          src="{{ 'bundle-flatlay.png' | asset_url }}"
+          alt="Slide XL Pre-Launch Bundle: mop, bucket, and refill heads"
+          width="1536"
+          height="1024"
+          loading="lazy"
+        >
+      {% endif %}
+    </div>
+    <div>
+      <p class="eyebrow eyebrow--purple">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+      <p class="lede">{{ section.settings.lede }}</p>
+      {% assign p = section.settings.product %}
+      {% if p == blank %}
+        {% assign p = all_products['pre-launch-bundle'] %}
+      {% endif %}
+      {% if p != blank and p.url != blank %}
+        {% assign bundle_url = p.url %}
+      {% else %}
+        {% assign bundle_url = '/products/pre-launch-bundle' %}
+      {% endif %}
+      {% if p != blank %}
+        <div class="price-row">
+          <span class="price">{{ p.price | money_with_currency }}</span>
+          {% if p.compare_at_price > p.price %}
+            <span class="compare">{{ p.compare_at_price | money_with_currency }} RRP</span>
+            <span class="badge">Save {{ p.compare_at_price | minus: p.price | money }}</span>
+          {% endif %}
+        </div>
+      {% endif %}
+      <p class="shipping-note">{{ section.settings.shipping_note }}</p>
+      <ul class="bundle-list">
+        {% for block in section.blocks %}
+          <li {{ block.shopify_attributes }}>
+            <div>
+              <strong>{{ block.settings.title }}</strong>
+              <p>{{ block.settings.body }}</p>
+            </div>
+            <span>{{ block.settings.rrp }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="{{ bundle_url }}">{{ section.settings.cta_label }}</a>
+        <a class="btn btn--outline" href="{{ bundle_url }}">Full details</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bundle offer",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Bundle product" },
+    { "type": "image_picker", "id": "image", "label": "Bundle image" },
+    { "type": "text", "id": "eyebrow", "default": "Only product on offer", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "default": "Pre-Launch Bundle", "label": "Heading" },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Intro",
+      "default": "Mop + 4 refills + collapsible bucket — shipped free across the USA"
+    },
+    {
+      "type": "text",
+      "id": "shipping_note",
+      "label": "Shipping note",
+      "default": "Including shipping right across the USA"
+    },
+    { "type": "text", "id": "cta_label", "default": "Add Pre-Launch Bundle", "label": "CTA" }
+  ],
+  "blocks": [
+    {
+      "type": "component",
+      "name": "Component",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Slide XL Mop with head" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "XL head, longer pole, slide-wringer, purple & white." },
+        { "type": "text", "id": "rrp", "label": "RRP label", "default": "$89.95" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle offer",
+      "blocks": [
+        {
+          "type": "component",
+          "settings": {
+            "title": "Slide XL Mop with head",
+            "body": "XL head, longer pole, slide-wringer, purple & white.",
+            "rrp": "$89.95"
+          }
+        },
+        {
+          "type": "component",
+          "settings": {
+            "title": "4× Mop head refills",
+            "body": "Extra ridged heads ready for heavy shedding seasons.",
+            "rrp": "$24.95 ea"
+          }
+        },
+        {
+          "type": "component",
+          "settings": {
+            "title": "Collapsible bucket",
+            "body": "Purple & white wheeled bucket that folds flat for storage.",
+            "rrp": "$29.95"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
