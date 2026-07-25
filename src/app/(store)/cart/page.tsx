@@ -32,7 +32,7 @@ export default function CartPage() {
           <div className="mt-10 rounded-2xl border border-purple/15 bg-white p-10 text-center">
             <p className="text-ink-muted">Cart&apos;s emptier than a floor after Slide XL.</p>
             <Link
-              href="/product/pre-launch-bundle"
+              href="/#bundle"
               className="mt-6 inline-flex rounded-md bg-purple px-5 py-3 text-sm font-bold uppercase tracking-wide text-white"
             >
               Shop the Pre-Launch Bundle

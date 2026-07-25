@@ -22,7 +22,7 @@ export function SiteFooter() {
           </h3>
           <ul className="mt-4 space-y-2 text-sm text-white/75">
             <li>
-              <Link href="/product/pre-launch-bundle" className="hover:text-white">
+              <Link href="/#bundle" className="hover:text-white">
                 Pre-Launch Bundle
               </Link>
             </li>

@@ -11,7 +11,7 @@ const links = [
   { href: "/#nano-slide", label: "Nano Slide" },
   { href: "/#for-who", label: "Who it's for" },
   { href: "/#mike", label: "Mike & Tamanui" },
-  { href: "/product/pre-launch-bundle", label: "Bundle" },
+  { href: "/#bundle", label: "Bundle" },
 ];
 
 export function SiteHeader() {

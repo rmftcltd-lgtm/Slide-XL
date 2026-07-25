@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { AddToCartButton } from "./AddToCartButton";
 import { BundlePricing } from "./BundlePricing";
 import { getProductByHandle } from "@/lib/products";
@@ -30,7 +29,7 @@ export function Hero() {
             <AddToCartButton
               productId={product.id}
               label={`Grab the Bundle — $${product.price.amount}`}
-              redirectToCart
+              redirectToCheckout
             />
           </div>
           <p className="mt-4 text-sm text-white/70">
@@ -323,13 +322,7 @@ export function BundleOffer() {
             <BundlePricing product={product} />
           </div>
           <div className="mt-8 flex flex-wrap gap-3">
-            <AddToCartButton productId={product.id} redirectToCart />
-            <Link
-              href="/product/pre-launch-bundle"
-              className="inline-flex items-center justify-center rounded-md border border-purple/30 bg-white px-5 py-3.5 text-sm font-bold uppercase tracking-wide text-purple transition hover:border-purple"
-            >
-              Full details
-            </Link>
+            <AddToCartButton productId={product.id} redirectToCheckout />
           </div>
         </div>
       </div>

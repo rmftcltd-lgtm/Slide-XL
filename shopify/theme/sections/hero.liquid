@@ -26,18 +26,12 @@
       {% if p == blank %}
         {% assign p = all_products['pre-launch-bundle'] %}
       {% endif %}
-      {% if p != blank and p.url != blank %}
-        {% assign bundle_url = p.url %}
+      {% if p != blank %}
+        {% capture cta_label %}{{ section.settings.cta_label }} — {{ p.price | money_with_currency }}{% endcapture %}
       {% else %}
-        {% assign bundle_url = '/products/pre-launch-bundle' %}
+        {% assign cta_label = section.settings.cta_label %}
       {% endif %}
-      <a class="btn btn--primary" href="{{ bundle_url }}">
-        {% if p != blank %}
-          {{ section.settings.cta_label }} — {{ p.price | money_with_currency }}
-        {% else %}
-          {{ section.settings.cta_label }}
-        {% endif %}
-      </a>
+      {% render 'checkout-cta', product: p, label: cta_label, class: 'btn btn--primary' %}
     </div>
     {% if section.settings.fine_print != blank %}
       <p class="hero__fine">{{ section.settings.fine_print }}</p>

@@ -22,11 +22,6 @@
       {% if p == blank %}
         {% assign p = all_products['pre-launch-bundle'] %}
       {% endif %}
-      {% if p != blank and p.url != blank %}
-        {% assign bundle_url = p.url %}
-      {% else %}
-        {% assign bundle_url = '/products/pre-launch-bundle' %}
-      {% endif %}
       {% if p != blank %}
         <div class="price-row">
           <span class="price">{{ p.price | money_with_currency }}</span>
@@ -49,8 +44,7 @@
         {% endfor %}
       </ul>
       <div class="hero__cta">
-        <a class="btn btn--primary" href="{{ bundle_url }}">{{ section.settings.cta_label }}</a>
-        <a class="btn btn--outline" href="{{ bundle_url }}">Full details</a>
+        {% render 'checkout-cta', product: p, label: section.settings.cta_label, class: 'btn btn--primary' %}
       </div>
     </div>
   </div>

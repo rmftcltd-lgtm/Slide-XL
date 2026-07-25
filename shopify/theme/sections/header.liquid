@@ -16,12 +16,7 @@
       <a href="{{ routes.root_url }}#nano-slide">Nano Slide</a>
       <a href="{{ routes.root_url }}#for-who">Who it's for</a>
       <a href="{{ routes.root_url }}#mike">Mike &amp; Tamanui</a>
-      {% assign bundle = all_products['pre-launch-bundle'] %}
-      {% if bundle != blank and bundle.url != blank %}
-        <a href="{{ bundle.url }}">Bundle</a>
-      {% else %}
-        <a href="/products/pre-launch-bundle">Bundle</a>
-      {% endif %}
+      <a href="{{ routes.root_url }}#bundle">Bundle</a>
     </nav>
     <div class="site-header__actions">
       <span class="pill">🇺🇸 {{ settings.brand_tagline | default: 'USA launch' }}</span>

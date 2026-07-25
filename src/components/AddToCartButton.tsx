@@ -9,6 +9,7 @@ type Props = {
   label?: string;
   className?: string;
   redirectToCart?: boolean;
+  redirectToCheckout?: boolean;
 };
 
 export function AddToCartButton({
@@ -16,6 +17,7 @@ export function AddToCartButton({
   label = "Add Pre-Launch Bundle",
   className = "",
   redirectToCart = false,
+  redirectToCheckout = false,
 }: Props) {
   const addItem = useCart((s) => s.addItem);
   const router = useRouter();
@@ -27,6 +29,10 @@ export function AddToCartButton({
       onClick={() => {
         addItem(productId, 1);
         setAdded(true);
+        if (redirectToCheckout) {
+          router.push("/checkout");
+          return;
+        }
         if (redirectToCart) {
           router.push("/cart");
           return;

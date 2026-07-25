@@ -1,54 +1,27 @@
+{% comment %}
+  Product page removed — send visitors straight to checkout with the bundle.
+{% endcomment %}
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% if current_variant != blank and current_variant.available %}
+  {% assign checkout_path = '/cart/add?id=' | append: current_variant.id | append: '&quantity=1&return_to=/checkout' %}
+{% else %}
+  {% assign checkout_path = routes.root_url | append: '#bundle' %}
+{% endif %}
+
 <section class="band band--wash product-page">
-  <div class="shell split">
-    <div>
-      {% if product.featured_image %}
-        <img
-          class="rounded shadow"
-          src="{{ product.featured_image | image_url: width: 1400 }}"
-          alt="{{ product.featured_image.alt | default: product.title | escape }}"
-          width="{{ product.featured_image.width }}"
-          height="{{ product.featured_image.height }}"
-          loading="eager"
-        >
-      {% endif %}
-    </div>
-    <div>
-      <p class="eyebrow eyebrow--purple">USA Pre-Launch · Limited offer</p>
-      <h1>{{ product.title }}</h1>
-      {% if product.description != blank %}
-        <p class="lede">{{ product.description | strip_html | truncate: 180 }}</p>
-      {% endif %}
-      {% assign current_variant = product.selected_or_first_available_variant %}
-      <div class="price-row">
-        <span class="price">{{ current_variant.price | money_with_currency }}</span>
-        {% if current_variant.compare_at_price > current_variant.price %}
-          <span class="compare">{{ current_variant.compare_at_price | money_with_currency }} RRP</span>
-          <span class="badge">Save {{ current_variant.compare_at_price | minus: current_variant.price | money }}</span>
-        {% endif %}
-      </div>
-      <p class="shipping-note">Including shipping right across the USA</p>
-      {% form 'product', product %}
-        <input type="hidden" name="id" value="{{ current_variant.id }}">
-        <button class="btn btn--primary" type="submit" {% unless current_variant.available %}disabled{% endunless %}>
-          {% if current_variant.available %}
-            {{ 'products.product.add_to_cart' | t }} — {{ current_variant.price | money_with_currency }}
-          {% else %}
-            {{ 'products.product.sold_out' | t }}
-          {% endif %}
-        </button>
-      {% endform %}
-      {% if product.description != blank %}
-        <div class="product-body">{{ product.description }}</div>
-      {% endif %}
-      <dl class="specs">
-        <div><dt>Handle</dt><dd>Longer XL reach</dd></div>
-        <div><dt>Head</dt><dd>Larger ridged pad</dd></div>
-        <div><dt>Finish</dt><dd>Purple &amp; white</dd></div>
-        <div><dt>Shipping</dt><dd>Included (USA)</dd></div>
-      </dl>
-    </div>
+  <div class="shell" style="text-align:center;padding:4rem 1rem;">
+    <p class="eyebrow eyebrow--purple">Taking you to checkout…</p>
+    <h1>{{ product.title }}</h1>
+    <p class="lede">One moment while we add the Pre-Launch Bundle to your order.</p>
+    <p style="margin-top:1.5rem;">
+      <a class="btn btn--primary" href="{{ checkout_path }}">Continue to checkout</a>
+    </p>
   </div>
 </section>
+
+<script>
+  window.location.replace({{ checkout_path | json }});
+</script>
 
 {% schema %}
 {

@@ -1,0 +1,30 @@
+{% comment %}
+  Renders a button that adds the given product (or first available variant)
+  to cart and sends the customer straight to checkout.
+  Accepts: product, label, class
+{% endcomment %}
+{% assign cta_product = product %}
+{% if cta_product == blank %}
+  {% assign cta_product = all_products['pre-launch-bundle'] %}
+{% endif %}
+{% if cta_product != blank %}
+  {% assign cta_variant = cta_product.selected_or_first_available_variant %}
+  {% if cta_variant != blank and cta_variant.available %}
+    <form action="{{ routes.cart_add_url }}" method="post" accept-charset="UTF-8">
+      <input type="hidden" name="id" value="{{ cta_variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="return_to" value="/checkout">
+      <button class="{{ class | default: 'btn btn--primary' }}" type="submit" name="add">
+        {{ label }}
+      </button>
+    </form>
+  {% else %}
+    <button class="{{ class | default: 'btn btn--primary' }}" type="button" disabled>
+      {{ 'products.product.sold_out' | t }}
+    </button>
+  {% endif %}
+{% else %}
+  <a class="{{ class | default: 'btn btn--primary' }}" href="/cart/add?id=50968455774455&quantity=1&return_to=/checkout">
+    {{ label }}
+  </a>
+{% endif %}

@@ -4,7 +4,8 @@
     {% if cart.item_count == 0 %}
       <div class="empty-card">
         <p>{{ 'cart.general.empty' | t }}</p>
-        <a class="btn btn--primary" href="/products/pre-launch-bundle">Shop the Pre-Launch Bundle</a>
+        {% assign bundle = all_products['pre-launch-bundle'] %}
+        {% render 'checkout-cta', product: bundle, label: 'Shop the Pre-Launch Bundle', class: 'btn btn--primary' %}
       </div>
     {% else %}
       <form action="{{ routes.cart_url }}" method="post" class="cart-layout">
