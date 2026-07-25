@@ -1,0 +1,158 @@
+<section class="band band--wash" id="nano-slide">
+  <div class="shell">
+    <p class="eyebrow eyebrow--purple">{{ section.settings.eyebrow }}</p>
+    <h2>{{ section.settings.heading }}</h2>
+    <p class="lede">{{ section.settings.lede }}</p>
+
+    <div class="nano-gallery">
+      <figure class="nano-gallery__item">
+        <img
+          src="{{ 'nano-slide-mop-head-tile.png' | asset_url }}"
+          alt="{{ section.settings.image_1_alt | escape }}"
+          width="1600"
+          height="900"
+          loading="lazy"
+        >
+        <figcaption>{{ section.settings.image_1_caption }}</figcaption>
+      </figure>
+      <figure class="nano-gallery__item">
+        <img
+          src="{{ 'nano-slide-mop-head-studio.png' | asset_url }}"
+          alt="{{ section.settings.image_2_alt | escape }}"
+          width="1600"
+          height="900"
+          loading="lazy"
+        >
+        <figcaption>{{ section.settings.image_2_caption }}</figcaption>
+      </figure>
+    </div>
+
+    <div class="nano-copy">
+      <h3>{{ section.settings.tech_heading }}</h3>
+      <p>{{ section.settings.tech_body }}</p>
+    </div>
+
+    <ul class="nano-features">
+      {% for block in section.blocks %}
+        <li {{ block.shopify_attributes }}>
+          <h4>{{ block.settings.title }}</h4>
+          <p>{{ block.settings.body }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Nano Slide Technology",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Nano Slide Technology ®"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The mop head is the technology."
+    },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Intro",
+      "default": "Nano Slide Technology ® is built into Slide XL’s special PVA mop head — a ridged, purple cleaning surface engineered to grab pet hair dry, wash floors wet, and release the mess when it hits water."
+    },
+    {
+      "type": "text",
+      "id": "image_1_alt",
+      "label": "Tile image alt text",
+      "default": "Purple Nano Slide PVA mop head with water droplets on white tile"
+    },
+    {
+      "type": "text",
+      "id": "image_1_caption",
+      "label": "Tile image caption",
+      "default": "Special PVA head on tile — drainage ribs hold and release water cleanly."
+    },
+    {
+      "type": "text",
+      "id": "image_2_alt",
+      "label": "Studio image alt text",
+      "default": "Purple Nano Slide PVA mop head with water droplets on black studio surface"
+    },
+    {
+      "type": "text",
+      "id": "image_2_caption",
+      "label": "Studio image caption",
+      "default": "Close-up of the ridged PVA surface — the heart of Nano Slide Technology ®."
+    },
+    {
+      "type": "text",
+      "id": "tech_heading",
+      "label": "Technology subheading",
+      "default": "Special PVA, built for hair and hard floors"
+    },
+    {
+      "type": "textarea",
+      "id": "tech_body",
+      "label": "Technology body",
+      "default": "Unlike ordinary foam or microfibre, Slide XL’s purple PVA head uses Nano Slide Technology ® — a precision-ridged polymer surface that traps hair and dirt in the grooves, then lets go when rinsed. That is why one head can sweep, mop, and dry without turning into a sticky hair magnet."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Feature" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Description" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nano Slide Technology",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Advanced poly-side drainage ribs",
+            "body": "Deep horizontal ribs increase surface area for superior drainage — water and fine debris move through the grooves instead of smearing across the floor."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Precision micro-grip surface",
+            "body": "A non-slip micro-grip texture between the ribs catches pet hair, dander, and grit on contact — wet or dry."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Ultra-durable reinforced edge",
+            "body": "Reinforced edges stand up to skirting boards, doorways, and daily abuse without fraying like cloth pads."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Fade-resistant hygienic colorant",
+            "body": "The signature purple is fade-resistant and easy to read as clean — you can see when the head needs a rinse."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Fast-drying core",
+            "body": "A non-absorbent, fast-drying core helps the head rinse clean and dry ready for the next pass — less smell, less slime."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
