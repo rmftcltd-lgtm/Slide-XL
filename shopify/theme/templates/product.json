@@ -3,7 +3,59 @@
     "main": {
       "type": "main-product",
       "settings": {}
+    },
+    "nano": {
+      "type": "nano-slide-technology",
+      "blocks": {
+        "n1": {
+          "type": "feature",
+          "settings": {
+            "title": "Advanced poly-side drainage ribs",
+            "body": "Deep horizontal ribs increase surface area for superior drainage — water and fine debris move through the grooves instead of smearing across the floor."
+          }
+        },
+        "n2": {
+          "type": "feature",
+          "settings": {
+            "title": "Precision micro-grip surface",
+            "body": "A non-slip micro-grip texture between the ribs catches pet hair, dander, and grit on contact — wet or dry."
+          }
+        },
+        "n3": {
+          "type": "feature",
+          "settings": {
+            "title": "Ultra-durable reinforced edge",
+            "body": "Reinforced edges stand up to skirting boards, doorways, and daily abuse without fraying like cloth pads."
+          }
+        },
+        "n4": {
+          "type": "feature",
+          "settings": {
+            "title": "Fade-resistant hygienic colorant",
+            "body": "The signature purple is fade-resistant and easy to read as clean — you can see when the head needs a rinse."
+          }
+        },
+        "n5": {
+          "type": "feature",
+          "settings": {
+            "title": "Fast-drying core",
+            "body": "A non-absorbent, fast-drying core helps the head rinse clean and dry ready for the next pass — less smell, less slime."
+          }
+        }
+      },
+      "block_order": ["n1", "n2", "n3", "n4", "n5"],
+      "settings": {
+        "eyebrow": "Nano Slide Technology ®",
+        "heading": "The mop head is the technology.",
+        "lede": "Nano Slide Technology ® is built into Slide XL’s special PVA mop head — a ridged, purple cleaning surface engineered to grab pet hair dry, wash floors wet, and release the mess when it hits water.",
+        "image_1_alt": "Purple Nano Slide PVA mop head with water droplets on white tile",
+        "image_1_caption": "Special PVA head on tile — drainage ribs hold and release water cleanly.",
+        "image_2_alt": "Purple Nano Slide PVA mop head with water droplets on black studio surface",
+        "image_2_caption": "Close-up of the ridged PVA surface — the heart of Nano Slide Technology ®.",
+        "tech_heading": "Special PVA, built for hair and hard floors",
+        "tech_body": "Unlike ordinary foam or microfibre, Slide XL’s purple PVA head uses Nano Slide Technology ® — a precision-ridged polymer surface that traps hair and dirt in the grooves, then lets go when rinsed. That is why one head can sweep, mop, and dry without turning into a sticky hair magnet."
+      }
     }
   },
-  "order": ["main"]
+  "order": ["main", "nano"]
 }

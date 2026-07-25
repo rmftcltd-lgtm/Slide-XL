@@ -8,6 +8,7 @@ import { useCart } from "@/lib/cart";
 
 const links = [
   { href: "/#how-it-works", label: "How it works" },
+  { href: "/#nano-slide", label: "Nano Slide" },
   { href: "/#for-who", label: "Who it's for" },
   { href: "/#mike", label: "Mike & Tamanui" },
   { href: "/product/pre-launch-bundle", label: "Bundle" },

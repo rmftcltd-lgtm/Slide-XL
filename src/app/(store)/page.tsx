@@ -6,6 +6,7 @@ import {
   Hero,
   HowItWorks,
   MeetMike,
+  NanoSlideTechnology,
 } from "@/components/HomeSections";
 
 export default function HomePage() {
@@ -13,6 +14,7 @@ export default function HomePage() {
     <>
       <Hero />
       <HowItWorks />
+      <NanoSlideTechnology />
       <BundleOffer />
       <ForWho />
       <MeetMike />

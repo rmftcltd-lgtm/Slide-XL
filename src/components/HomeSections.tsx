@@ -105,6 +105,102 @@ export function HowItWorks() {
   );
 }
 
+export function NanoSlideTechnology() {
+  const features = [
+    {
+      title: "Advanced poly-side drainage ribs",
+      body: "Deep horizontal ribs increase surface area for superior drainage — water and fine debris move through the grooves instead of smearing across the floor.",
+    },
+    {
+      title: "Precision micro-grip surface",
+      body: "A non-slip micro-grip texture between the ribs catches pet hair, dander, and grit on contact — wet or dry.",
+    },
+    {
+      title: "Ultra-durable reinforced edge",
+      body: "Reinforced edges stand up to skirting boards, doorways, and daily abuse without fraying like cloth pads.",
+    },
+    {
+      title: "Fade-resistant hygienic colorant",
+      body: "The signature purple is fade-resistant and easy to read as clean — you can see when the head needs a rinse.",
+    },
+    {
+      title: "Fast-drying core",
+      body: "A non-absorbent, fast-drying core helps the head rinse clean and dry ready for the next pass — less smell, less slime.",
+    },
+  ];
+
+  return (
+    <section id="nano-slide" className="bg-aussie-wash py-20 sm:py-28">
+      <div className="mx-auto max-w-content px-4 sm:px-6">
+        <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-purple">
+          Nano Slide Technology ®
+        </p>
+        <h2 className="mt-3 max-w-2xl font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+          The mop head is the technology.
+        </h2>
+        <p className="mt-4 max-w-2xl text-ink-muted leading-relaxed">
+          Nano Slide Technology ® is built into Slide XL’s special PVA mop
+          head — a ridged, purple cleaning surface engineered to grab pet
+          hair dry, wash floors wet, and release the mess when it hits water.
+        </p>
+
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
+          <figure className="m-0 overflow-hidden rounded-2xl">
+            <Image
+              src="/images/nano-slide-mop-head-tile.png"
+              alt="Purple Nano Slide PVA mop head with water droplets on white tile"
+              width={1600}
+              height={900}
+              className="h-auto w-full object-cover"
+            />
+            <figcaption className="mt-2 text-sm text-ink-muted">
+              Special PVA head on tile — drainage ribs hold and release water
+              cleanly.
+            </figcaption>
+          </figure>
+          <figure className="m-0 overflow-hidden rounded-2xl">
+            <Image
+              src="/images/nano-slide-mop-head-studio.png"
+              alt="Purple Nano Slide PVA mop head with water droplets on black studio surface"
+              width={1600}
+              height={900}
+              className="h-auto w-full object-cover"
+            />
+            <figcaption className="mt-2 text-sm text-ink-muted">
+              Close-up of the ridged PVA surface — the heart of Nano Slide
+              Technology ®.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div className="mt-12 max-w-2xl">
+          <h3 className="font-display text-2xl font-bold text-ink">
+            Special PVA, built for hair and hard floors
+          </h3>
+          <p className="mt-3 text-ink-muted leading-relaxed">
+            Unlike ordinary foam or microfibre, Slide XL’s purple PVA head
+            uses Nano Slide Technology ® — a precision-ridged polymer surface
+            that traps hair and dirt in the grooves, then lets go when rinsed.
+            That is why one head can sweep, mop, and dry without turning into
+            a sticky hair magnet.
+          </p>
+        </div>
+
+        <ul className="mt-10 grid gap-6 sm:grid-cols-2">
+          {features.map((f) => (
+            <li key={f.title}>
+              <h4 className="font-display text-lg font-bold text-ink">
+                {f.title}
+              </h4>
+              <p className="mt-2 text-ink-muted leading-relaxed">{f.body}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 export function ForWho() {
   const audiences = [
     {
