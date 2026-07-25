@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-const STORAGE_KEY = "slidexl_offer_ends_at";
-const DURATION_MS = 390_000; // 6.5 minutes
+import {
+  isOfferUnlocked,
+  OFFER_DURATION_MS,
+  OFFER_ENDS_KEY,
+  OFFER_UNLOCKED_EVENT,
+} from "@/lib/offer";
 
 type Theme = "hero" | "ink";
 
@@ -13,26 +16,36 @@ function pad(n: number) {
 
 function readEndsAt(): number {
   try {
-    const stored = sessionStorage.getItem(STORAGE_KEY);
+    const stored = sessionStorage.getItem(OFFER_ENDS_KEY);
     const ends = stored ? Number(stored) : NaN;
     if (!Number.isFinite(ends)) {
-      const next = Date.now() + DURATION_MS;
-      sessionStorage.setItem(STORAGE_KEY, String(next));
+      const next = Date.now() + OFFER_DURATION_MS;
+      sessionStorage.setItem(OFFER_ENDS_KEY, String(next));
       return next;
     }
     return ends;
   } catch {
-    return Date.now() + DURATION_MS;
+    return Date.now() + OFFER_DURATION_MS;
   }
 }
 
 export function OfferCountdown({ theme = "ink" }: { theme?: Theme }) {
+  const [unlocked, setUnlocked] = useState(false);
   const [remainingMs, setRemainingMs] = useState<number | null>(null);
   const [srText, setSrText] = useState(
     "Special bundle price reserved for 6 minutes and 30 seconds.",
   );
 
   useEffect(() => {
+    const syncUnlocked = () => setUnlocked(isOfferUnlocked());
+    syncUnlocked();
+    window.addEventListener(OFFER_UNLOCKED_EVENT, syncUnlocked);
+    return () => window.removeEventListener(OFFER_UNLOCKED_EVENT, syncUnlocked);
+  }, []);
+
+  useEffect(() => {
+    if (!unlocked) return;
+
     const endsAt = readEndsAt();
     let lastSpokenMinute: number | null = null;
 
@@ -56,10 +69,14 @@ export function OfferCountdown({ theme = "ink" }: { theme?: Theme }) {
     tick();
     const id = window.setInterval(tick, 250);
     return () => window.clearInterval(id);
-  }, []);
+  }, [unlocked]);
+
+  if (!unlocked) return null;
 
   const totalSec =
-    remainingMs === null ? 390 : Math.max(0, Math.ceil(remainingMs / 1000));
+    remainingMs === null
+      ? Math.ceil(OFFER_DURATION_MS / 1000)
+      : Math.max(0, Math.ceil(remainingMs / 1000));
   const mins = Math.floor(totalSec / 60);
   const secs = totalSec % 60;
   const urgent = remainingMs !== null && totalSec <= 60;

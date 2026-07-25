@@ -1,3 +1,4 @@
+import { DiscountPopup } from "@/components/DiscountPopup";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 
@@ -11,6 +12,7 @@ export default function StoreLayout({
       <SiteHeader />
       <main>{children}</main>
       <SiteFooter />
+      <DiscountPopup />
     </>
   );
 }

@@ -1,11 +1,30 @@
 (function () {
   var STORAGE_KEY = "slidexl_offer_ends_at";
+  var UNLOCKED_KEY = "slidexl_offer_unlocked";
   var DEFAULT_MS = 390000; // 6.5 minutes
   var tickTimer = null;
   var lastSpokenMinute = null;
 
   function pad(n) {
     return String(n).padStart(2, "0");
+  }
+
+  function storageGet(key) {
+    try {
+      return sessionStorage.getItem(key);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function storageSet(key, value) {
+    try {
+      sessionStorage.setItem(key, value);
+    } catch (e) {}
+  }
+
+  function isUnlocked() {
+    return storageGet(UNLOCKED_KEY) === "1";
   }
 
   function readDuration(nodes) {
@@ -16,17 +35,13 @@
   }
 
   function getEndsAt(durationMs) {
-    try {
-      var stored = sessionStorage.getItem(STORAGE_KEY);
-      var ends = stored ? Number(stored) : NaN;
-      if (!Number.isFinite(ends)) {
-        ends = Date.now() + durationMs;
-        sessionStorage.setItem(STORAGE_KEY, String(ends));
-      }
-      return ends;
-    } catch (e) {
-      return Date.now() + durationMs;
+    var stored = storageGet(STORAGE_KEY);
+    var ends = stored ? Number(stored) : NaN;
+    if (!Number.isFinite(ends)) {
+      ends = Date.now() + durationMs;
+      storageSet(STORAGE_KEY, String(ends));
     }
+    return ends;
   }
 
   function render(nodes, remainingMs) {
@@ -69,12 +84,25 @@
     lastSpokenMinute = mins;
   }
 
+  function hideAll(nodes) {
+    nodes.forEach(function (node) {
+      node.hidden = true;
+    });
+  }
+
   function start() {
     var nodes = Array.prototype.slice.call(
       document.querySelectorAll("[data-offer-countdown]")
     );
     if (!nodes.length) return;
 
+    if (!isUnlocked()) {
+      hideAll(nodes);
+      document.documentElement.classList.remove("offer-unlocked");
+      return;
+    }
+
+    document.documentElement.classList.add("offer-unlocked");
     var durationMs = readDuration(nodes);
     var endsAt = getEndsAt(durationMs);
 
@@ -86,6 +114,8 @@
     if (tickTimer) window.clearInterval(tickTimer);
     tickTimer = window.setInterval(tick, 250);
   }
+
+  window.addEventListener("slidexl:offer-unlocked", start);
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", start);
